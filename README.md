@@ -1,2 +1,2 @@
 ### reseau social entreprise
-#### nodejs express sequlize mysql
+#### nodejs express sequelize mysql
