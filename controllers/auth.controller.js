@@ -77,7 +77,7 @@ exports.signIn = (req, res) => {
     } else {
       res.status(500).json({
         status:0,
-        message: "Aucun utilisateur existe avec cet email"
+        message: "Cet email n'est pas enregistré"
       })
     }
   })
