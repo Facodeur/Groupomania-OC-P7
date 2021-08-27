@@ -10,7 +10,8 @@ router.post("/register", authController.signUp);
 router.post("/login", authController.signIn);
 
 // Données utilisateur
-router.post("/profile", authJwt.checkToken, userController.userInfo);
+router.post("/profile", authJwt, userController.userInfo);
+router.put("/:id", authJwt, userController.userUpdate);
 
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const JWT = require("jsonwebtoken");
 
-let validateToken = (req, res, next) => {
+ module.exports = (req, res, next) => {
   let token = req.headers["authorization"];
 
   if (!token) {
@@ -18,8 +18,4 @@ let validateToken = (req, res, next) => {
     req.data = decoded;
     next();
   });
-};
-
-module.exports = {
-  checkToken: validateToken,
 };
