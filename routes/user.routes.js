@@ -12,6 +12,7 @@ router.post("/login", authController.signIn);
 // Données utilisateur
 router.post("/profile", authJwt, userController.userInfo);
 router.put("/:id", authJwt, userController.userUpdate);
+router.delete("/:id", authJwt, userController.userDelete);
 
 
 module.exports = router;

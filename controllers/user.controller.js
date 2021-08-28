@@ -22,6 +22,7 @@ exports.userInfo = (req, res) => {
 // Mise à jour infos utilisateur
 exports.userUpdate = (req, res) => {
   const { username, email, password } = req.body;
+
   userModel
     .update(
       { username, email, password: bcrypt.hashSync(password, 10) },
@@ -41,3 +42,18 @@ exports.userUpdate = (req, res) => {
       });
     });
 };
+
+// Supprimer l'utilisateur avec son id
+exports.userDelete = (req, res) => {
+  
+  userModel
+    .destroy(
+      { where: { id: req.params.id }}
+    )
+    .then(() => {
+      res.status(200).json({ status: 1, message: "Compte supprimé avec succes" });
+    })
+    .catch(err => {
+      res.status(500).json({ status: 0, data: err });
+    })
+}
