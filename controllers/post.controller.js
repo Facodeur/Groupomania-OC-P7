@@ -15,14 +15,13 @@ exports.createPost = (req, res) => {
         postModel
           .create({
             content: req.body.content,
-            picture: req.body.picture,
+            picture: req.file !== undefined ? `./images/${req.file.filename}` : "",
             userId: user.id,
           })
-          .then((data) => {
-            console.log(data);
+          .then(() => {
             res.status(201).json({
               status: 1,
-              data: data,
+              message: "Post enregistré",
             });
           })
           .catch((err) => {
@@ -31,10 +30,6 @@ exports.createPost = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).json({
-        status: 0,
-        message: "Vous n'avez pas l'autorisation",
-        error: err.message,
-      });
+      res.status(500).json({ error: err.message });
     });
 };

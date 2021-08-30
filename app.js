@@ -1,6 +1,7 @@
 require("dotenv").config({ path: "./config/.env" });
 const express = require("express");
 const PORT = process.env.PORT;
+const path = require('path');
 const userRoutes = require("./routes/user.routes");
 const postRoutes = require("./routes/post.routes");
 
@@ -12,6 +13,8 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 // routes
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
+
+app.use('/images', express.static(path.join( __dirname, 'images' )));
 
 // server
 app.listen(PORT, () => {
