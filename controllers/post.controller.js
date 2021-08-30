@@ -1,6 +1,24 @@
 const postModel = require("../models").Post;
 const userModel = require("../models").User;
 
+exports.getAllPosts = (req, res) => {
+
+  postModel
+    .findAll({ order: [ ["createdAt", "DESC"]]})
+    .then(posts => {
+      res.status(200).json({
+        status: 1,
+        data: posts
+      })
+    })
+    .ctach(err => {
+      res.status(500).json({
+        error: err.message
+      })
+    })
+
+}
+
 exports.createPost = (req, res) => {
   const user_id = req.data.id;
 
