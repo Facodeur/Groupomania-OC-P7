@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./config/.env" });
 const express = require("express");
 const PORT = process.env.PORT;
 const userRoutes = require("./routes/user.routes");
+const postRoutes = require("./routes/post.routes");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 // routes
 app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
 
 // server
 app.listen(PORT, () => {

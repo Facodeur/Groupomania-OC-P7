@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt");
 
 // Récupération infos utilisateur connecté
 exports.userInfo = (req, res) => {
-  let student_id = req.data.id;
+  let user_id = req.data.id;
 
   userModel
-    .findByPk(student_id)
+    .findByPk(user_id)
     .then((user) => {
       if (user) {
         res.status(200).json({
