@@ -15,7 +15,7 @@ exports.getAllPosts = (req, res) => {
     .then((posts) => {
       res.status(200).json({ status: 1, data: posts });
     })
-    .catch((err) => { 
+    .catch((err) => {
       res.status(500).json({ message: err.message });
     });
 };
@@ -27,7 +27,7 @@ exports.createPost = (req, res) => {
     .findOne({ where: { id: user_id } })
     .then((user) => {
       if (req.body.content === "" || req.body.content === undefined) {
-        return res.status(200).json({ message: "Veuillez écrire quelque chose" });
+        res.status(400).json({ message: "Veuillez écrire quelque chose" });
       }
       if (user) {
         postModel
@@ -62,18 +62,44 @@ exports.updatePost = (req, res) => {
               content: req.body.content,
               picture: post.picture,
             },
-            { where: { id: post_id } }
+            { where: { id: req.params.id } }
           )
           .then((post) => {
             if (post == 1) {
-              res.send({ message: "Le post a été modifié" });
+              res.status(200).json({ message: "Le post a été modifié" });
             }
           });
       } else {
-        res.status(401).json({ status: 0, message: "Vous n'êtes pas autorisé" });
+        res
+          .status(401)
+          .json({ status: 0, message: "Vous n'êtes pas autorisé" });
       }
     })
     .catch(() => {
       res.status(500).json({ message: "Erreur lors de la mise à jour" });
+    });
+};
+
+exports.deletePost = (req, res) => {
+  const user_id = req.data.id;
+
+  postModel
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+
+      if (post.userId === user_id) {
+        postModel
+          .destroy({ where: { id: req.params.id } })
+          .then((post) => {
+            if (post === 1) {
+              res.status(200).json({ message: "Post supprimé avec succés" });
+            }
+          });
+      } else {
+        res.status(401).json({ message: "Vous n'êtes pas autorisé" });
+      }
+    })
+    .catch((err) => {
+      res.status(404).json({ message: "Ce post n'existe pas" });
     });
 };
