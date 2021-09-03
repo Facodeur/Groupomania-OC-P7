@@ -13,5 +13,6 @@ router.delete("/:id", authJwt, postController.deletePost);
 // comments
 router.patch('/comment-post/:id', authJwt, postController.commentPost);
 router.patch('/edit-comment-post/:id', authJwt, postController.editCommentPost);
+router.patch('/delete-comment-post/:id', authJwt, postController.deleteCommentPost);
 
 module.exports = router;
