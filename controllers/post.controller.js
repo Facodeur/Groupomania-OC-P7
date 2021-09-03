@@ -39,7 +39,7 @@ exports.createPost = (req, res) => {
           .create({
             content: req.body.content,
             picture: req.file !== undefined ? `./images/${req.file.filename}` : "",
-            userId: user.id,
+            userId: user.id
           })
           .then(() => {
             res.status(201).json({ status: 1, message: "Post enregistré" });
@@ -90,11 +90,13 @@ exports.deletePost = (req, res) => {
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
       if (post.userId === user_id) {
-        postModel.destroy({ where: { id: req.params.id } }).then((post) => {
-          if (post === 1) {
-            res.status(200).json({ message: "Post supprimé avec succés" });
-          }
-        });
+        postModel
+          .destroy({ where: { id: req.params.id } })
+          .then((post) => {
+            if (post === 1) {
+              res.status(200).json({ message: "Post supprimé avec succés" });
+            }
+          });
       } else {
         res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
@@ -138,9 +140,11 @@ exports.editCommentPost = (req, res) => {
         },
       ],
     })
-    .then((post) => {
+    .then(() => {
       commentModel
-        .findOne({ where: { id: req.body.idComment } })
+        .findOne({
+          where: { id: req.body.idComment },
+        })
         .then((comment) => {
           if (comment.userId === user_id) {
             commentModel
@@ -150,7 +154,7 @@ exports.editCommentPost = (req, res) => {
                 },
                 { where: { id: req.body.idComment } }
               )
-              .then((comment) => {
+              .then(() => {
                 res.status(200).json({ message: "Commentaire modifié" });
               });
           } else {
@@ -160,5 +164,45 @@ exports.editCommentPost = (req, res) => {
     })
     .catch(() => {
       res.status(500).json({ message: "Erreur lors de la mise à jour" });
+    });
+};
+
+exports.deleteCommentPost = (req, res) => {
+  const user_id = req.data.id;
+
+  postModel
+    .findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: commentModel,
+          require: true,
+        },
+      ],
+    })
+    .then(() => {
+      commentModel
+        .findOne({
+          where: { id: req.body.idComment },
+        })
+        .then((comment) => {
+          if (comment.userId === user_id) {
+            commentModel
+              .destroy({
+                where: { id: req.body.idComment },
+              })
+              .then(() => {
+                res.status(200).json({ message: "Commentaire supprimé" });
+              });
+          } else {
+            res.status(401).json({ message: "Vous n'êtes pas autorisé" });
+          }
+        })
+        .catch(() => {
+          res.status(500).json({ message: "Id commentaire incorrect" });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err });
     });
 };
