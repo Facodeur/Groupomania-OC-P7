@@ -13,9 +13,9 @@ exports.getAllPosts = (req, res) => {
         },
         {
           model: commentModel,
-          require: true
-        }
-      ],      
+          require: true,
+        },
+      ],
     })
     .then((posts) => {
       res.status(200).json({ status: 1, data: posts });
@@ -39,7 +39,7 @@ exports.createPost = (req, res) => {
           .create({
             content: req.body.content,
             picture: req.file !== undefined ? `./images/${req.file.filename}` : "",
-            userId: user.id
+            userId: user.id,
           })
           .then(() => {
             res.status(201).json({ status: 1, message: "Post enregistré" });
@@ -75,7 +75,7 @@ exports.updatePost = (req, res) => {
             }
           });
       } else {
-        res.status(401).json({ status: 0, message: "Vous n'êtes pas autorisé" });
+        res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
     })
     .catch(() => {
@@ -122,5 +122,43 @@ exports.commentPost = (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ message: "error" + err });
+    });
+};
+
+exports.editCommentPost = (req, res) => {
+  const user_id = req.data.id;
+
+  postModel
+    .findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: commentModel,
+          require: true,
+        },
+      ],
+    })
+    .then((post) => {
+      commentModel
+        .findOne({ where: { id: req.body.idComment } })
+        .then((comment) => {
+          if (comment.userId === user_id) {
+            commentModel
+              .update(
+                {
+                  content: req.body.content,
+                },
+                { where: { id: req.body.idComment } }
+              )
+              .then((comment) => {
+                res.status(200).json({ message: "Commentaire modifié" });
+              });
+          } else {
+            res.status(401).json({ message: "Vous n'êtes pas autorisé" });
+          }
+        });
+    })
+    .catch(() => {
+      res.status(500).json({ message: "Erreur lors de la mise à jour" });
     });
 };
