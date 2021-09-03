@@ -1,5 +1,6 @@
 const postModel = require("../models").Post;
 const userModel = require("../models").User;
+const commentModel = require("../models").Comment;
 
 exports.getAllPosts = (req, res) => {
   postModel
@@ -10,7 +11,11 @@ exports.getAllPosts = (req, res) => {
           model: userModel,
           attributes: ["username"],
         },
-      ],
+        {
+          model: commentModel,
+          require: true
+        }
+      ],      
     })
     .then((posts) => {
       res.status(200).json({ status: 1, data: posts });
@@ -70,9 +75,7 @@ exports.updatePost = (req, res) => {
             }
           });
       } else {
-        res
-          .status(401)
-          .json({ status: 0, message: "Vous n'êtes pas autorisé" });
+        res.status(401).json({ status: 0, message: "Vous n'êtes pas autorisé" });
       }
     })
     .catch(() => {
@@ -86,20 +89,38 @@ exports.deletePost = (req, res) => {
   postModel
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
-
       if (post.userId === user_id) {
-        postModel
-          .destroy({ where: { id: req.params.id } })
-          .then((post) => {
-            if (post === 1) {
-              res.status(200).json({ message: "Post supprimé avec succés" });
-            }
-          });
+        postModel.destroy({ where: { id: req.params.id } }).then((post) => {
+          if (post === 1) {
+            res.status(200).json({ message: "Post supprimé avec succés" });
+          }
+        });
       } else {
         res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
     })
     .catch((err) => {
       res.status(404).json({ message: "Ce post n'existe pas" });
+    });
+};
+
+exports.commentPost = (req, res) => {
+  const user_id = req.data.id;
+
+  postModel
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      commentModel
+        .create({
+          content: req.body.content,
+          userId: user_id,
+          postId: post.id,
+        })
+        .then((comment) => {
+          res.status(201).json({ message: "commentaire créé", data: comment });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "error" + err });
     });
 };
