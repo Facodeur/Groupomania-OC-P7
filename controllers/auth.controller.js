@@ -9,24 +9,26 @@ const Op = Sequelize.Op;
 exports.signUp = (req, res) => {
   const { username, email, password } = req.body;
   // Vérification si l'utilisateur est deja enregistré avec cet email
-  userModel.findOne({ where: { email: { [Op.eq]: email } } }).then((user) => {
-    if (user) {
-      res.status(500).json({
-        status: 0,
-        message: "Cet adresse email est déjà enregistré",
-      });
-    } else {
-      // Création de l'utilisateur
-      userModel
-        .create({ username, email, password: bcrypt.hashSync(password, 10) })
-        .then(() => {
-          res.status(201).json({
-            status: 1,
-            message: "Utilisateur créé avec succes",
-          });
-        })
-        .catch((err) => res.status(500).json({ error: err }));
-    }
+  userModel
+    .findOne({ where: { email: { [Op.eq]: email } } })
+    .then((user) => {
+      if (user) {
+        res.status(403).json({
+          status: 0,
+          message: "Cet adresse email est déjà enregistré",
+        });
+      } else {
+        // Création de l'utilisateur
+        userModel
+          .create({ username, email, password: bcrypt.hashSync(password, 10) })
+          .then(() => {
+            res.status(201).json({
+              status: 1,
+              message: "Utilisateur créé avec succes",
+            });
+          })
+          .catch((err) => res.status(500).json({ message: err }));
+      }
   });
 };
 
