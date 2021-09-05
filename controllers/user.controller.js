@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 // Récupération infos utilisateur connecté
 exports.userInfo = (req, res) => {
-  let user_id = req.data.id;
+  const user_id = req.data.id;
 
   userModel
     .findByPk(user_id)
@@ -21,18 +21,27 @@ exports.userInfo = (req, res) => {
 
 // Mise à jour infos utilisateur
 exports.userUpdate = (req, res) => {
+  const userIdConnected = req.data.id;
   const { username, email, password } = req.body;
 
   userModel
-    .update(
-      { username, email, password: bcrypt.hashSync(password, 10) },
-      { returning: true, where: { id: req.params.id } }
-    )
-    .then(() => {
-      res.status(200).json({
-        status: 1,
-        message: "Information mise à jour",
-      });
+    .findOne({ where: { id: req.params.id } })
+    .then((user) => {
+      if (user.id === userIdConnected) {
+        userModel
+          .update(
+            { username, email, password: bcrypt.hashSync(password, 10) },
+            { returning: true, where: { id: req.params.id } }
+          )
+          .then(() => {
+            res.status(200).json({
+              status: 1,
+              message: "Information mise à jour",
+            });
+          })
+      } else {
+        res.status(401).json({ message: "Vous n'êtes pas autorisé"})
+      }
     })
     .catch((err) => {
       res.status(500).json({
@@ -45,15 +54,14 @@ exports.userUpdate = (req, res) => {
 
 // Supprimer l'utilisateur avec son id
 exports.userDelete = (req, res) => {
-  
   userModel
-    .destroy(
-      { where: { id: req.params.id }}
-    )
+    .destroy({ where: { id: req.params.id } })
     .then(() => {
-      res.status(200).json({ status: 1, message: "Compte supprimé avec succes" });
+      res
+        .status(200)
+        .json({ status: 1, message: "Compte supprimé avec succes" });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({ status: 0, data: err });
-    })
+    });
 };
