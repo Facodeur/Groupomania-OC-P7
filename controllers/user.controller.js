@@ -62,6 +62,6 @@ exports.userDelete = (req, res) => {
         .json({ status: 1, message: "Compte supprimé avec succes" });
     })
     .catch((err) => {
-      res.status(500).json({ status: 0, data: err });
+      res.status(500).json({ status: 0, message: err.message });
     });
 };
