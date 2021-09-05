@@ -38,9 +38,9 @@ exports.userUpdate = (req, res) => {
               status: 1,
               message: "Information mise à jour",
             });
-          })
+          });
       } else {
-        res.status(401).json({ message: "Vous n'êtes pas autorisé"})
+        res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
     })
     .catch((err) => {
@@ -54,14 +54,22 @@ exports.userUpdate = (req, res) => {
 
 // Supprimer l'utilisateur avec son id
 exports.userDelete = (req, res) => {
+  const userIdConnected = req.data.id;
+
   userModel
-    .destroy({ where: { id: req.params.id } })
-    .then(() => {
-      res
-        .status(200)
-        .json({ status: 1, message: "Compte supprimé avec succes" });
+    .findOne({ where: { id: req.params.id } })
+    .then((user) => {
+      if (user.id === userIdConnected) {
+        userModel
+          .destroy({ where: { id: req.params.id } })
+          .then(() => {
+            res.status(200).json({ status: 1, message: "Compte supprimé avec succes" });
+          });
+      } else {
+        res.status(401).json({ message: "Vous n'êtes pas autorisé" });
+      }
     })
-    .catch((err) => {
-      res.status(500).json({ status: 0, message: err.message });
+    .catch(() => {
+      res.status(500).json({ status: 0, message: "Utilisateur non trouvé" });
     });
 };
