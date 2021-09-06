@@ -1,5 +1,4 @@
 const userModel = require("../models").User;
-const bcrypt = require("bcrypt");
 
 // Récupération infos utilisateur connecté
 exports.userInfo = (req, res) => {
@@ -30,7 +29,7 @@ exports.userUpdate = (req, res) => {
       if (user.id === userIdConnected) {
         userModel
           .update(
-            { username, email, password: bcrypt.hashSync(password, 10) },
+            { username, email, password },
             { returning: true, where: { id: req.params.id } }
           )
           .then(() => {
@@ -38,7 +37,8 @@ exports.userUpdate = (req, res) => {
               status: 1,
               message: "Information mise à jour",
             });
-          });
+          })
+          .catch((err) => res.status(500).json({ message: err.message }));
       } else {
         res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
