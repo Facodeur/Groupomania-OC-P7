@@ -20,14 +20,14 @@ exports.signUp = (req, res) => {
       } else {
         // Création de l'utilisateur
         userModel
-          .create({ username, email, password: bcrypt.hashSync(password, 10) })
+          .create({ username, email, password })
           .then(() => {
             res.status(201).json({
               status: 1,
               message: "Utilisateur créé avec succes",
             });
           })
-          .catch((err) => res.status(500).json({ message: err }));
+          .catch((err) => res.status(500).json({ message: err.message }));
       }
   });
 };

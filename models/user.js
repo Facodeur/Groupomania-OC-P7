@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 'use strict';
 const {
   Model
@@ -34,13 +35,27 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: "Veuillez entrer un email"
+        },
         isEmail: {
           args: true,
           msg: "L'email n'est pas valide",
         },
+        
       },
     },
-    password: DataTypes.STRING
+    password: {
+      type: DataTypes.STRING,
+      set(value) {
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
+          throw new Error('Minimum huit caractères, au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial');
+        } else {
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
+        }
+      }
+    } 
   }, {
     sequelize,
     modelName: 'User',
