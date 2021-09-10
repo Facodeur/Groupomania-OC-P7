@@ -4,9 +4,9 @@ import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 
 const App = () => {
+  
   useEffect(() => {
-    let sideNav = document.querySelector("#slide-out");
-    M.Sidenav.init(sideNav, {});
+    M.AutoInit();
   });
 
   return (
