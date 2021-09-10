@@ -3,8 +3,15 @@ import React from "react";
 const SignupForm = () => {
   return (
     <div className="container">
-      <div className="row">
-        <form className="col s12">
+      <div className="row center-align">
+      <div className="col l12 s12">
+          <img
+            src="./img/icons/login.svg"
+            alt="log"
+            style={{ height: 300, width: 300 }}
+          />
+        </div>
+        <form className="col l12 s12">
           <div className="row">
             <div className="input-field col s12">
               <input id="email" type="email" className="validate" />
