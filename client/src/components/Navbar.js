@@ -11,13 +11,10 @@ const Navbar = () => {
           </Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <a href="sass.html">Sass</a>
+              <Link to="/signin">Se connecter</Link>
             </li>
             <li>
-              <a href="badges.html">Components</a>
-            </li>
-            <li>
-              <a href="collapsible.html">JavaScript</a>
+              <Link to="/signup">S'inscrire</Link>
             </li>
           </ul>
         </div>
