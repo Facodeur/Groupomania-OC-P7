@@ -10,7 +10,7 @@ const Navbar = () => {
             Groupomania
           </Link>
           <Link to="#" data-target="slide-out" className="sidenav-trigger">
-            <i class="material-icons">menu</i>
+            <i className="material-icons">menu</i>
           </Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
@@ -24,7 +24,7 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
-      <ul class="sidenav" id="slide-out">
+      <ul className="sidenav" id="slide-out">
         <li>
           <Link to="/signin">Se connecter</Link>
         </li>
