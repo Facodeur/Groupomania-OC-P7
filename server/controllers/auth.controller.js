@@ -45,7 +45,7 @@ exports.signIn = (req, res) => {
           let token = JWT.sign({ id: user.id }, process.env.TOKEN_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN,
           });
-          res.cookie('jwt', token, { httpOnly: true, maxAge: expire})
+          res.cookie('jwt', token, { httpOnly: true, sameSite: 'lax', maxAge: expire })
           res.status(200).send({
             message: "Vous êtes connecté",
             user: user.id,
