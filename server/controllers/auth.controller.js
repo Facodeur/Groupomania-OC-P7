@@ -2,7 +2,7 @@ const userModel = require("../models").User;
 const bcrypt = require("bcrypt");
 const Sequelize = require("sequelize");
 const JWT = require("jsonwebtoken");
-const expire = 3 * 24 * 60 * 60 * 1000;
+const expire = 24 * 60 * 60 * 1000;
 
 const Op = Sequelize.Op;
 
@@ -66,4 +66,4 @@ exports.signIn = (req, res) => {
 exports.logout = (req, res) => {
   res.cookie("jwt", '', { maxAge: 1 });
   res.redirect("/");
-}
+};
