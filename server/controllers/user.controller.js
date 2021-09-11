@@ -2,17 +2,13 @@ const userModel = require("../models").User;
 
 // Récupération infos utilisateur connecté
 exports.userInfo = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = req.currentUser.id;
 
   userModel
     .findByPk(user_id)
     .then((user) => {
       if (user) {
-        res.status(200).json({
-          status: 1,
-          message: "Infos profil",
-          data: user,
-        });
+        res.status(200).json({ currentUser: user_id });
       }
     })
     .catch((err) => console.log(err));
