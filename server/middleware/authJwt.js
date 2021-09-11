@@ -15,7 +15,7 @@ const JWT = require("jsonwebtoken");
         message: "Unauthorized",
       });
     }
-    req.data = decoded;
+    req.currentUser = decoded;
     next();
   });
 };
