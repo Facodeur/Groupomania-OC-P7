@@ -1,21 +1,20 @@
 const JWT = require("jsonwebtoken");
 
  module.exports = (req, res, next) => {
-  let token = req.headers["authorization"];
+  let token = req.cookies.jwt;
 
   if (!token) {
-    return res.status(403).send({
-      message: "No token provided!",
-    });
+    res.locals.user = null;
+    res.status(403).send({ message: "No token provided!" });
   }
 
   JWT.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
     if (error) {
-      return res.status(401).send({
-        message: "Unauthorized",
-      });
+      res.locals.user = null;
+      res.cookie("jwt", '', { maxAge: 1 });
+      res.status(401).send({ message: "Unauthorized" });
     }
-    req.currentUser = decoded;
+    res.locals.user = decoded;
     next();
   });
 };
