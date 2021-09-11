@@ -11,7 +11,7 @@ router.post("/login", authController.signIn);
 router.get("/logout", authController.logout);
 
 // Données utilisateur
-router.post("/profile", authJwt, userController.userInfo);
+router.get("/profile", authJwt, userController.userInfo);
 router.put("/:id", authJwt, userController.userUpdate);
 router.delete("/:id", authJwt, userController.userDelete);
 
