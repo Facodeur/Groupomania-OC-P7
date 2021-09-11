@@ -2,6 +2,7 @@ const userModel = require("../models").User;
 const bcrypt = require("bcrypt");
 const Sequelize = require("sequelize");
 const JWT = require("jsonwebtoken");
+const expire = 3 * 24 * 60 * 60 * 1000;
 
 const Op = Sequelize.Op;
 
@@ -44,22 +45,25 @@ exports.signIn = (req, res) => {
           let token = JWT.sign({ id: user.id }, process.env.TOKEN_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN,
           });
-          res.status(200).json({
-            status: 1,
+          res.cookie('jwt', token, { httpOnly: true, maxAge: expire})
+          res.status(200).send({
             message: "Vous êtes connecté",
-            token: token,
+            user: user.id,
           });
         } else {
-          res.status(500).json({
-            status: 0,
-            message: "Mot de passe incorrect",
+          res.status(200).send({
+            passwordError: "Mot de passe incorrect",
           });
         }
       } else {
-        res.status(500).json({
-          status: 0,
-          message: "Email incorrect",
+        res.status(200).send({
+          emailError: "Email incorrect",
         });
       }
     });
 };
+
+exports.logout = (req, res) => {
+  res.cookie("jwt", '', { maxAge: 1 });
+  res.redirect("/");
+}

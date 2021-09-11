@@ -8,6 +8,7 @@ const router = express.Router();
 // authentification
 router.post("/register", authController.signUp);
 router.post("/login", authController.signIn);
+router.get("/logout", authController.logout);
 
 // Données utilisateur
 router.post("/profile", authJwt, userController.userInfo);
