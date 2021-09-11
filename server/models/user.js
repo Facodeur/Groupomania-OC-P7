@@ -43,7 +43,6 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: "L'email n'est pas valide",
         },
-        
       },
     },
     password: {
