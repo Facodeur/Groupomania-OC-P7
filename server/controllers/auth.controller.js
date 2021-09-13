@@ -14,9 +14,8 @@ exports.signUp = (req, res) => {
     .findOne({ where: { email: { [Op.eq]: email } } })
     .then((user) => {
       if (user) {
-        res.status(403).json({
-          status: 0,
-          message: "Cet adresse email est déjà enregistré",
+        res.status(200).json({
+          errorEmail: "Cet adresse email est déjà enregistré",
         });
       } else {
         // Création de l'utilisateur
@@ -24,13 +23,25 @@ exports.signUp = (req, res) => {
           .create({ username, email, password })
           .then(() => {
             res.status(201).json({
-              status: 1,
               message: "Utilisateur créé avec succes",
             });
           })
-          .catch((err) => res.status(500).json({ message: err.message }));
+          .catch((err) => {
+              err.errors.map(error => {
+              if(error.path === "username") {
+                return res.status(200).json({ errorUsername: error.message })
+              }
+              if(error.path === "email") {
+                return res.status(200).json({ errorEmail: error.message })
+              }
+              if(error.path === "password") {
+                return res.status(200).json({ errorPassword: error.message })
+              }              
+            })
+          });
       }
-  });
+    })
+    .catch((err) => res.status(200).json({ error: err }));
 };
 
 // Connexion de l'utilisateur
