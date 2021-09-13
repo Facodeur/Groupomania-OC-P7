@@ -46,16 +46,18 @@ const SignupForm = () => {
         if (res.data.errorEmail)
           setEmailError(res.data.errorEmail);
 
-        if (res.data.errors)
+        if (res.data.errors) {
           setUsernameError(res.data.errors.username)
           setEmailError(res.data.errors.email);
           setPasswordError(res.data.errors.password);
-        
-        if(res.status === 201)
+        } else if(res.status === 201) {
           history.push("/signin");
+        }
       })
       .catch((err) => console.log(err));
     }
+
+    
   };
   return (
     <div className="container">
