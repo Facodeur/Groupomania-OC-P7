@@ -2,6 +2,7 @@ const userModel = require("../models").User;
 const bcrypt = require("bcrypt");
 const Sequelize = require("sequelize");
 const JWT = require("jsonwebtoken");
+const { signupErrors } = require("../utils/errors.validate");
 const expire = 24 * 60 * 60 * 1000;
 
 const Op = Sequelize.Op;
@@ -27,17 +28,8 @@ exports.signUp = (req, res) => {
             });
           })
           .catch((err) => {
-              err.errors.map(error => {
-              if(error.path === "username") {
-                return res.status(200).json({ errorUsername: error.message })
-              }
-              if(error.path === "email") {
-                return res.status(200).json({ errorEmail: error.message })
-              }
-              if(error.path === "password") {
-                return res.status(200).json({ errorPassword: error.message })
-              }              
-            })
+            const errors = signupErrors(err)
+            res.status(200).send({ errors })
           });
       }
     })
