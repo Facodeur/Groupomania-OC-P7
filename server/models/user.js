@@ -47,13 +47,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      set(value) {
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
-          throw new Error('Minimum huit caractères, au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial');
-        } else {
-          this.setDataValue('password', bcrypt.hashSync(value, 10));
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Veuillez entrer un password"
+        },
+        is: {
+          args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          msg: 'Minimum huit caractères, au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial'
         }
-      }
+      },
     },
     isAdmin: {
       type: DataTypes.INTEGER,
@@ -61,6 +64,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     }
   }, {
+    hooks: {
+      beforeCreate: async (user) => {
+        (user.password = await bcrypt.hash(user.password, 10))
+      }
+    },
     sequelize,
     modelName: 'User',
   });
