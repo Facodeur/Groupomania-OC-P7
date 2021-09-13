@@ -24,7 +24,7 @@ exports.signUp = (req, res) => {
           .create({ username, email, password })
           .then(() => {
             res.status(201).json({
-              message: "Utilisateur créé avec succes",
+              message: "Inscription validé !",
             });
           })
           .catch((err) => {
