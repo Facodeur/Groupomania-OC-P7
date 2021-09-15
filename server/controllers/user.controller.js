@@ -3,12 +3,16 @@ const userModel = require("../models").User;
 // Récupération infos utilisateur connecté
 exports.userInfo = (req, res) => {
   const user_id = res.locals.user.id;
-
+  
   userModel
     .findByPk(user_id)
     .then((user) => {
       if (user) {
-        res.status(200).json({ currentUser: user.id });
+        res.status(200).json( {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          createAt: user.createdAt});
       }
     })
     .catch((err) => console.log(err));
@@ -16,8 +20,8 @@ exports.userInfo = (req, res) => {
 
 // Mise à jour infos utilisateur
 exports.userUpdate = (req, res) => {
-  const userIdConnected = req.data.id;
-  const { username, email, password } = req.body;
+  const userIdConnected = res.locals.user.id;
+  const { username } = req.body;
 
   userModel
     .findOne({ where: { id: req.params.id } })
@@ -25,14 +29,11 @@ exports.userUpdate = (req, res) => {
       if (user.id === userIdConnected) {
         userModel
           .update(
-            { username, email, password },
+            { username },
             { returning: true, where: { id: req.params.id } }
           )
           .then(() => {
-            res.status(200).json({
-              status: 1,
-              message: "Information mise à jour",
-            });
+            res.status(200).json({ message: "Information mise à jour" });
           })
           .catch((err) => res.status(500).json({ message: err.message }));
       } else {
@@ -40,17 +41,13 @@ exports.userUpdate = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).json({
-        status: 0,
-        message: "Erreur lors de la mise à jour",
-        data: err,
-      });
+      res.status(500).json({ message: "Utilisateur non trouvé" });
     });
 };
 
 // Supprimer l'utilisateur avec son id
 exports.userDelete = (req, res) => {
-  const userIdConnected = req.data.id;
+  const userIdConnected = res.locals.user.id;
 
   userModel
     .findOne({ where: { id: req.params.id } })
@@ -59,13 +56,13 @@ exports.userDelete = (req, res) => {
         userModel
           .destroy({ where: { id: req.params.id } })
           .then(() => {
-            res.status(200).json({ status: 1, message: "Compte supprimé avec succes" });
+            res.status(200).json({ message: "Compte supprimé avec succes" });
           });
       } else {
         res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
     })
     .catch(() => {
-      res.status(500).json({ status: 0, message: "Utilisateur non trouvé" });
+      res.status(500).json({ message: "Utilisateur non trouvé" });
     });
 };
