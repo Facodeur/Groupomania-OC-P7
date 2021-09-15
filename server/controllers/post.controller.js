@@ -18,7 +18,7 @@ exports.getAllPosts = (req, res) => {
       ],
     })
     .then((posts) => {
-      res.status(200).json({ status: 1, data: posts });
+      res.status(200).json({ data: posts });
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
@@ -26,7 +26,7 @@ exports.getAllPosts = (req, res) => {
 };
 
 exports.createPost = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = res.locals.user.id;
 
   userModel
     .findOne({ where: { id: user_id } })
@@ -42,7 +42,7 @@ exports.createPost = (req, res) => {
             userId: user.id
           })
           .then(() => {
-            res.status(201).json({ status: 1, message: "Post enregistré" });
+            res.status(201).json({ message: "Post enregistré" });
           })
           .catch((err) => {
             res.status(500).json({ message: err.message });
@@ -55,7 +55,7 @@ exports.createPost = (req, res) => {
 };
 
 exports.updatePost = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = res.locals.user.id;
 
   postModel
     .findOne({ where: { id: req.params.id } })
@@ -79,12 +79,12 @@ exports.updatePost = (req, res) => {
       }
     })
     .catch(() => {
-      res.status(500).json({ message: "Erreur lors de la mise à jour" });
+      res.status(500).json({ message: "Ce post n'existe pas" });
     });
 };
 
 exports.deletePost = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = res.locals.user.id;
 
   postModel
     .findOne({ where: { id: req.params.id } })
@@ -101,13 +101,13 @@ exports.deletePost = (req, res) => {
         res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
     })
-    .catch((err) => {
+    .catch(() => {
       res.status(404).json({ message: "Ce post n'existe pas" });
     });
 };
 
 exports.commentPost = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = res.locals.user.id;
 
   postModel
     .findOne({ where: { id: req.params.id } })
@@ -123,12 +123,12 @@ exports.commentPost = (req, res) => {
         });
     })
     .catch((err) => {
-      res.status(500).json({ message: "error" + err });
+      res.status(500).json({ message: err.message });
     });
 };
 
 exports.editCommentPost = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = res.locals.user.id;
 
   postModel
     .findOne({
@@ -146,6 +146,9 @@ exports.editCommentPost = (req, res) => {
           where: { id: req.body.idComment },
         })
         .then((comment) => {
+          if(comment.postId !== +req.params.id) {
+            res.status(404).json({ message: "Erreur id post"})
+          }
           if (comment.userId === user_id) {
             commentModel
               .update(
@@ -168,7 +171,7 @@ exports.editCommentPost = (req, res) => {
 };
 
 exports.deleteCommentPost = (req, res) => {
-  const user_id = req.data.id;
+  const user_id = res.locals.user.id;
 
   postModel
     .findOne({
@@ -186,7 +189,11 @@ exports.deleteCommentPost = (req, res) => {
           where: { id: req.body.idComment },
         })
         .then((comment) => {
-          if (comment.userId === user_id) {
+          
+          if(comment.postId !== +req.params.id) {
+            res.status(404).json({ message: "Erreur id post"})
+          } 
+          else if (comment.userId === user_id) {
             commentModel
               .destroy({
                 where: { id: req.body.idComment },
@@ -194,12 +201,13 @@ exports.deleteCommentPost = (req, res) => {
               .then(() => {
                 res.status(200).json({ message: "Commentaire supprimé" });
               });
-          } else {
+          } 
+          else {
             res.status(401).json({ message: "Vous n'êtes pas autorisé" });
           }
         })
         .catch(() => {
-          res.status(500).json({ message: "Id commentaire incorrect" });
+          res.status(500).json({ message: "Commentaire introuvable" });
         });
     })
     .catch((err) => {
