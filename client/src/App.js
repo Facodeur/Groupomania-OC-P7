@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { UidContext } from "./context/UidContext";
+import { UserContext } from "./context/UserContext";
 import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 import useAuth from "./hooks/useAuth";
@@ -10,10 +9,10 @@ const App = () => {
 console.log("--------", user)
 
   return (
-    <UidContext.Provider value={user}>
+    <UserContext.Provider value={ user }>
       <Navbar />
       <Routes />
-    </UidContext.Provider>
+    </UserContext.Provider>
   );
 };
 
