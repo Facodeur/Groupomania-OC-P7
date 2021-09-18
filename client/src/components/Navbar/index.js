@@ -12,7 +12,7 @@ import {
   ProfilIcon,
 } from "./NavbarElements";
 
-const Navbar = () => {
+const Navbar = ({ toggle }) => {
   const { authUser } = useContext(UserContext);
   const userData = useSelector((state) => state.userReducer);
 
@@ -22,7 +22,7 @@ const Navbar = () => {
         <NavLink to="/">
           <Logo src="./img/logo/logo-groupomania.svg" alt="logo" />
         </NavLink>
-        <Bars />
+        <Bars onClick={toggle} />
         {authUser ? (
           <NavMenu>
             <NavLink to="/profil">
