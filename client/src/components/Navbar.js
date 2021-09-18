@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Logout from "./Logout";
 
 const Navbar = () => {
   const { authUser } = useContext(UserContext);
-  console.log("Navbar", authUser)
+  const userData = useSelector((state) => state.userReducer);
   
   return (
     <div>
@@ -20,7 +21,7 @@ const Navbar = () => {
           {authUser ? (
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>
-                <h5>Bienvenue {authUser.username}</h5>
+                <h5>Bienvenue {userData.username}</h5>
               </li>
               <li>
                 <Link to="/profil">profil</Link>
