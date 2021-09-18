@@ -4,6 +4,7 @@ import axios from "axios";
 
 const useAuth = () => {
   const [authUser, setAuth] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(false);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -12,13 +13,17 @@ const useAuth = () => {
         url: `${process.env.REACT_APP_API_URL}/api/user/profile`,
         withCredentials: true,
       }).then((res) => {
-        setAuth(res.data);
+        if(res)
+          setAuth(res.data);
       }).catch(err => console.log(err.message))
     };
     fetchToken();
-  }, [])
 
-  return authUser;
+    return () => setLoadingUser(false);
+
+  }, [loadingUser])
+
+  return { authUser, setLoadingUser};
 }
 
 export default useAuth

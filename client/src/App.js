@@ -2,14 +2,18 @@ import { UserContext } from "./context/UserContext";
 import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 import useAuth from "./hooks/useAuth";
+import { useMemo } from "react";
 
 const App = () => {
-  const user = useAuth();
-  
-console.log("--------", user)
+  const { authUser, setLoadingUser } = useAuth();
+
+  const value = useMemo( () => (
+    { authUser, setLoadingUser }
+    ),[authUser, setLoadingUser]
+  );
 
   return (
-    <UserContext.Provider value={ user }>
+    <UserContext.Provider value={value}>
       <Navbar />
       <Routes />
     </UserContext.Provider>

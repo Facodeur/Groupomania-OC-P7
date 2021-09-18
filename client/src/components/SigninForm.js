@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+
 
 const SigninForm = () => {
   let history = useHistory();
+  const { setLoadingUser } = useContext(UserContext)
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +23,6 @@ const SigninForm = () => {
           email,
           password
         }
-        
       })
       .then((res) => {
         if (res.data.emailError || res.data.passwordError) {
@@ -27,6 +30,7 @@ const SigninForm = () => {
           setPasswordError(res.data.passwordError);
         } else {
           console.log(res.data);
+          setLoadingUser(true)
           history.push("/");
           setEmailError("");
           setPasswordError("");
