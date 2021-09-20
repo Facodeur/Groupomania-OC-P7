@@ -1,4 +1,4 @@
-import { GET_USER } from "../actions/user.actions";
+import { DELETE_USER, GET_USER } from "../actions/user.actions";
 
 
 const initialState = {};
@@ -6,7 +6,10 @@ const initialState = {};
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return action.payload
+      return action.payload;
+
+    case DELETE_USER:
+      return action.payload;
       
     default:
       return state;
