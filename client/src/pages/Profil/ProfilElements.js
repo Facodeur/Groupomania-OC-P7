@@ -31,8 +31,9 @@ export const ProfilTitre = styled.h2`
 `
 
 export const ProfilDesc = styled.p`
-  margin: 20px 20px;
+  margin: 30px 5px;
   color: #fff;
+  font-size: 1.2rem;
 `
 
 export const ProfilRow = styled.div`
@@ -42,13 +43,13 @@ export const ProfilRow = styled.div`
 
 export const ButtonDelete = styled.button`
   background: #EA2027;
-  padding: 16px 10px;
+  padding: 16px 16px;
   border: none;
   border-radius: 4px;
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  
+  margin: 20px 0px;
 `
 
 
