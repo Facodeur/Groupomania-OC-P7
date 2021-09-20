@@ -1,6 +1,5 @@
 import { DELETE_USER, GET_USER } from "../actions/user.actions";
 
-
 const initialState = {};
 
 export default function userReducer(state = initialState, action) {
@@ -10,7 +9,7 @@ export default function userReducer(state = initialState, action) {
 
     case DELETE_USER:
       return action.payload;
-      
+
     default:
       return state;
   }
