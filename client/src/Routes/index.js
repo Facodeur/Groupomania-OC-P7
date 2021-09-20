@@ -4,17 +4,19 @@ import SigninForm from "../components/LogForm/SigninForm"
 import SignupForm from "../components/LogForm/SignupForm";
 import Home from '../pages/Home';
 import Profil from '../pages/Profil';
+import PrivateRoute from './PrivateRoute';
 
 const index = () => {
   return (
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/profil" component={Profil} />
+        <PrivateRoute exact path="/profil" component={Profil} />
         <Route exact path="/signin" component={SigninForm} />
         <Route exact path="/signup" component={SignupForm} />
         <Redirect to="/" />
       </Switch>
   )
 }
+
 
 export default index
