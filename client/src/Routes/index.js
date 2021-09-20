@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
 import SigninForm from "../components/LogForm/SigninForm"
 import SignupForm from "../components/LogForm/SignupForm";
-import Home from '../pages/Home';
 import Profil from '../pages/Profil';
+import Home from "../pages/Home";
 import PrivateRoute from './PrivateRoute';
 
 const index = () => {
