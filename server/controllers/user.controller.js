@@ -56,6 +56,7 @@ exports.userDelete = (req, res) => {
         userModel
           .destroy({ where: { id: req.params.id } })
           .then(() => {
+            res.cookie("jwt", '', { maxAge: 1 })
             res.status(200).json({ message: "Compte supprimé avec succes" });
           });
       } else {
