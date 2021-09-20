@@ -1,5 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser } from "../../actions/user.actions";
+import { dateParser } from "../../utils/date-parser";
+import cookie from "js-cookie";
 import {
   Container,
   ProfilWrap,
@@ -10,19 +14,38 @@ import {
   ProfilRow,
 } from "./ProfilElements";
 
+
 const Profil = () => {
-  const userData = useSelector(state => state.userReducer);
-  console.log(userData)
+
+  const userData = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const removeCookie = (key) => {
+    if (window !== undefined) {
+      cookie.remove(key, { expires: 1 });
+    }
+  };
+
+  const handleDeleteUser = (id) => {
+    dispatch(deleteUser(id))
+    removeCookie("jwt");
+    history.push("/signin");
+  };
+
   return (
     <>
       <Container>
         <ProfilWrap>
           <ProfilCard>
             <ProfilTitre>{userData.username}</ProfilTitre>
-            <ProfilDesc>email: {userData.email}</ProfilDesc>
-            <ProfilDesc>inscrit depuis le {userData.createAt}</ProfilDesc>
+            <ProfilDesc>Email: {userData.email}</ProfilDesc>
+            <ProfilDesc>Membre depuis le : </ProfilDesc>
+            <ProfilDesc>{dateParser(userData.createAt)}</ProfilDesc>
             <ProfilRow>
-              <ButtonDelete>Supprimer le compte</ButtonDelete>
+              <ButtonDelete onClick={() => handleDeleteUser(userData.id)}>
+                Supprimer le compte
+              </ButtonDelete>
             </ProfilRow>
           </ProfilCard>
         </ProfilWrap>
