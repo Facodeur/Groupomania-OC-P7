@@ -16,7 +16,7 @@ import {
 
 const CardPost = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
-  console.log(post)
+  // console.log(post)
 
   useEffect(() => {
     post && setIsLoading(false)

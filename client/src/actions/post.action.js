@@ -2,14 +2,15 @@ import axios from "axios";
 
 export const GET_POSTS = "GET_POSTS";
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (num) => async (dispatch) => {
   try {
     const res = await axios({
       method: "GET",
       url: `${process.env.REACT_APP_API_URL}/api/post`,
       withCredentials: true,
     });
-    dispatch({ type: GET_POSTS, payload: res.data });
+    const array = res.data.slice(0, num);
+    dispatch({ type: GET_POSTS, payload: array });
   } catch (err) {
     return console.log(err);
   }
