@@ -20,7 +20,7 @@ const Logout = ({ className }) => {
     })
     .then(() => removeCookie("jwt"))
     .catch((err) => console.log(err))
-    window.location = "/signin"
+    window.location = "/";
   }
 
   return (
