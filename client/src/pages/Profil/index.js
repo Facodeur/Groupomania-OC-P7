@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "../../actions/user.actions";
 import { dateParser } from "../../utils/date-parser";
@@ -12,14 +11,12 @@ import {
   ProfilDesc,
   ButtonDelete,
   ProfilRow,
+  AlertMessage,
 } from "./ProfilElements";
 
-
 const Profil = () => {
-
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const removeCookie = (key) => {
     if (window !== undefined) {
@@ -28,10 +25,16 @@ const Profil = () => {
   };
 
   const handleDeleteUser = (id) => {
-    dispatch(deleteUser(id))
+    dispatch(deleteUser(id));
     removeCookie("jwt");
-    history.push("/signin");
   };
+
+  if (userData.message) {
+    setTimeout(() => {
+      window.location = "/";
+    }, 2000);
+    return <AlertMessage>{userData.message}</AlertMessage>;
+  }
 
   return (
     <>

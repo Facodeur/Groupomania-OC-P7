@@ -28,21 +28,21 @@ export const ProfilCard = styled.div`
 export const ProfilTitre = styled.h2`
   color: #fff;
   text-align: center;
-`
+`;
 
 export const ProfilDesc = styled.p`
   margin: 30px 5px;
   color: #fff;
   font-size: 1.2rem;
-`
+`;
 
 export const ProfilRow = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 export const ButtonDelete = styled.button`
-  background: #EA2027;
+  background: #ea2027;
   padding: 16px 16px;
   border: none;
   border-radius: 4px;
@@ -50,7 +50,13 @@ export const ButtonDelete = styled.button`
   font-size: 20px;
   cursor: pointer;
   margin: 20px 0px;
-`
+`;
 
-
-
+export const AlertMessage = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background: tomato;
+  height: 50px;
+`;
