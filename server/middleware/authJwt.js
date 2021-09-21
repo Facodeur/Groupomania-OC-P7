@@ -5,7 +5,7 @@ const JWT = require("jsonwebtoken");
 
   if (!token) {
     res.locals.user = null;
-    res.status(403).send({ message: "No token provided!" });
+    res.status(401).send({ message: "No token provided!" });
   }
 
   JWT.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
