@@ -38,7 +38,7 @@ exports.createPost = (req, res) => {
         postModel
           .create({
             content: req.body.content,
-            picture: req.file !== undefined ? `./images/${req.file.filename}` : "",
+            picture: req.file !== undefined ? `./upload/posts/${req.file.filename}` : "",
             userId: user.id
           })
           .then(() => {
