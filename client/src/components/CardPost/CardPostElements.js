@@ -9,7 +9,7 @@ export const CardContainer = styled.li`
   border-radius: 5px;
   padding: 15px;
   margin: 10px;
-  width: auto;
+  max-width: auto;
 `
 
 export const CardHeader = styled.div`
@@ -41,6 +41,8 @@ export const CardText = styled.p`
 export const CardPicture = styled.img`
   margin: 2px;
   border-radius: 5px;
+  max-width: 100%;
+  height: auto;
 `
 
 export const CardFooter = styled.div`
