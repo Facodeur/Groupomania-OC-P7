@@ -5,7 +5,7 @@ import { getUser } from '../actions/user.actions';
 
 
 const useAuth = () => {
-  const [authUser, setAuth] = useState(null);
+  const [authUser, setAuthUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(false);
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ const useAuth = () => {
         withCredentials: true,
       }).then((res) => {
         if(res)
-          setAuth(res.data);
+        setAuthUser(res.data);
       }).catch(err => console.log(err.message))
     };
     fetchToken();
