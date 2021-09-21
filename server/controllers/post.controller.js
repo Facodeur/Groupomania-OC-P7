@@ -18,7 +18,7 @@ exports.getAllPosts = (req, res) => {
       ],
     })
     .then((posts) => {
-      res.status(200).json({ data: posts });
+      res.status(200).send( posts );
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
