@@ -10,7 +10,7 @@ const MIME_TYPES = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "images");
+    cb(null, "../client/public/upload/posts");
   },
   filename: (req, file, cb) => {
     const extension = MIME_TYPES[file.mimetype];
@@ -18,4 +18,4 @@ const storage = multer.diskStorage({
   }
 });
 
-module.exports = multer({ storage: storage, limits: { fileSize: 1200000 } }).single('image');
+module.exports = multer({ storage: storage, limits: { fileSize: 4000000 } }).single('image');
