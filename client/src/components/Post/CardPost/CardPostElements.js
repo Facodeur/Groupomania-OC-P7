@@ -9,7 +9,7 @@ export const CardContainer = styled.li`
   border-radius: 5px;
   padding: 15px;
   margin: 10px;
-  max-width: auto;
+  max-width: 768px;
 `
 
 export const CardHeader = styled.div`
@@ -31,6 +31,7 @@ export const CardUsername = styled.h3`
   display: flex;
   align-items: center;
   font-size: 1rem;
+  margin-right: 10px;
 `
 
 export const CardText = styled.p`

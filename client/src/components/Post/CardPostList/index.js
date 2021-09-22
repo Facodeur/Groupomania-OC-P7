@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../../actions/post.action";
+import { getPosts } from "../../../actions/post.action";
 import CardPost from "../CardPost";
 
 const CardPostList = () => {
@@ -28,7 +28,8 @@ const CardPostList = () => {
     window.addEventListener("scroll", loadMore);
 
     return () => window.removeEventListener("scroll", loadMore);
-  }, [loadPost, count, dispatch]);
+  }, [ loadPost, count, dispatch ]);
+
   return (
     <>
       {posts.length &&

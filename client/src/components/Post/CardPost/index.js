@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { dateParser } from "../../utils/date-parser";
+import { dateParser } from "../../../utils/date-parser";
 import { FaSpinner } from "react-icons/fa";
 import {
   CardContainer,
@@ -16,7 +16,6 @@ import {
 
 const CardPost = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
-  // console.log(post)
 
   useEffect(() => {
     post && setIsLoading(false)
