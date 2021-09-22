@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { getUser } from '../actions/user.actions';
-
+import { getUser } from "../actions/user.actions";
 
 const useAuth = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -15,19 +14,24 @@ const useAuth = () => {
         method: "get",
         url: `${process.env.REACT_APP_API_URL}/api/user/jwtid`,
         withCredentials: true,
-      }).then((res) => {
-        if(res)
-        setAuthUser(res.data);
-      }).catch(err => console.log(err.message))
+      })
+        .then((res) => {
+          if (res) setAuthUser(res.data);
+        })
+        .catch((err) => console.log("catch", err.message));
     };
-    fetchToken();
-    if(authUser) dispatch(getUser());
-    
+    if (authUser === null) {
+      fetchToken();
+    }
+    if (authUser) {
+      dispatch(getUser());
+    }
+
     return () => setLoadingUser(false);
+    
+  }, [loadingUser, authUser, dispatch]);
 
-  }, [loadingUser, authUser, dispatch])
+  return { authUser, setAuthUser, setLoadingUser };
+};
 
-  return { authUser, setLoadingUser};
-}
-
-export default useAuth
+export default useAuth;
