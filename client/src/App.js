@@ -7,11 +7,11 @@ import Sidebar from "./components/Sidebar";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { authUser, setLoadingUser } = useAuth();
+  const { authUser, setAuthUser, setLoadingUser } = useAuth();
 
   const value = useMemo( () => (
-    { authUser, setLoadingUser }
-    ),[authUser, setLoadingUser]
+    { authUser, setAuthUser, setLoadingUser }
+    ),[authUser, setAuthUser, setLoadingUser]
   );
 
   const toggle = () => {
