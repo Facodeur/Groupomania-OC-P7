@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import axios from "axios"
 import cookie from "js-cookie";
 import styled from "styled-components";
 import { AiOutlineLogout } from "react-icons/ai"
+import { UserContext } from '../context/UserContext';
 
 const Logout = ({ className }) => {
+  const { setAuthUser } = useContext(UserContext);
 
   const removeCookie = (key) => {
     if(window !== undefined) {
@@ -20,7 +22,8 @@ const Logout = ({ className }) => {
     })
     .then(() => removeCookie("jwt"))
     .catch((err) => console.log(err))
-    window.location = "/";
+    
+    setAuthUser(null);
   }
 
   return (
