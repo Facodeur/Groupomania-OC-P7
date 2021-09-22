@@ -40,7 +40,6 @@ const SigninForm = () => {
           setEmailError(res.data.emailError);
           setPasswordError(res.data.passwordError);
         } else {
-          console.log(res.data);
           setLoadingUser(true);
           history.push("/");
           setEmailError("");
