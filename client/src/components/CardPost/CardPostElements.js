@@ -5,7 +5,7 @@ import { BiCommentDetail } from "react-icons/bi";
 export const CardContainer = styled.li`
   display: flex;
   flex-direction: column;
-  border: 2px solid #15cdfc;
+  border: 1px solid #15cdfc;
   border-radius: 5px;
   padding: 15px;
   margin: 10px;
