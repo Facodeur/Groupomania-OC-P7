@@ -10,10 +10,13 @@ import rootReducer from "./reducers";
 // dev tools
 import { composeWithDevTools } from "redux-devtools-extension";
 import { GlobalStyle } from "./theme/GlobalStyle";
+import { getUsers } from "./actions/users.action";
 
 const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
+
+store.dispatch(getUsers());
 
 ReactDOM.render(
   <Provider store={store}>
