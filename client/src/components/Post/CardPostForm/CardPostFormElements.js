@@ -7,8 +7,8 @@ export const CardContenair = styled.div`
   background: #000;
   margin: 20px;
   border-radius: 5px;
-  min-width: 300px;
-  max-width: 600px;
+  width: 100%;
+  max-width: 768px;
 `
 
 export const CardRow = styled.div`
@@ -63,7 +63,8 @@ export const BtnSend = styled.button`
   margin-right: 20px;
   font-size: 0.9rem;
   font-weight: bold;
-
+  width: 120px;
+  
   &:hover {
     cursor: pointer;
     transition: 0.2s;
