@@ -1,19 +1,27 @@
 const userModel = require("../models").User;
 
+exports.getAllUsers = (req, res) => {
+  userModel
+    .findAll({ 
+      attributes: { exclude: ["password"]} 
+    })
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch(err => res.status(500).json(err))
+}
+
 // Récupération infos utilisateur connecté
 exports.userInfo = (req, res) => {
   const user_id = res.locals.user.id;
   
   userModel
-    .findByPk(user_id)
+    .findOne({ 
+      where: { id: user_id },
+      attributes: { exclude: ["password"]}
+    })
     .then((user) => {
-      if (user) {
-        res.status(200).json( {
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          createAt: user.createdAt});
-      }
+      res.status(200).json(user)
     })
     .catch((err) => console.log(err));
 };
