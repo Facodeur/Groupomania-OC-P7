@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FaUserCircle } from "react-icons/fa";
-import { BiCommentDetail } from "react-icons/bi";
+import { BiCommentDetail, BiEdit } from "react-icons/bi";
 
 export const CardContainer = styled.li`
   display: flex;
@@ -48,22 +48,39 @@ export const CardPicture = styled.img`
 
 export const CardFooter = styled.div`
   display: flex;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
   color: #57606f;
   padding-top: 10px;
 `
 
 export const IconComment = styled(BiCommentDetail)`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   margin-right: 5px;
 
   &:hover {
     cursor: pointer;
-    transition: 0.2s all ease-in-out;
-    transform: scale(1.25);
+    transition: 0.1s;
+    transform: scale(1.20);
   }
+`
+
+export const UpdateIcon = styled(BiEdit)`
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+
+  &:hover {
+    cursor: pointer;
+    transition: 0.1s;
+    transform: scale(1.20);
+  }
+`
+
+export const IconWrap = styled.div`
+  display: flex;
 `
 
 export const DatePosted = styled.p`
