@@ -10,6 +10,7 @@ import {
   DatePosted,
   Icon,
 } from "../CardPost/CardPostElements";
+import EditDeleteComment from "../EditDeleteComment";
 
 const CardComment = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
@@ -40,13 +41,14 @@ const CardComment = ({ post }) => {
                   {usersData.map((user) => {
                     if (user.id === comment.userId) {
                       return user.username;
-                    }
+                    } else return null;
                   })}
                 </p>
               </CardUsername>
               <DatePosted>{dateParser(comment.createdAt)}</DatePosted>
             </CardHeader>
             <p>{comment.content}</p>
+            <EditDeleteComment comment={comment} postId={post.id} />
           </CardContainer>
         );
       })}
