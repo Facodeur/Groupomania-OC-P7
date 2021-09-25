@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUser } from "../actions/user.actions";
+import { getUsers } from "../actions/users.action";
 
 const useAuth = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -25,6 +26,7 @@ const useAuth = () => {
     }
     if (authUser) {
       dispatch(getUser());
+      dispatch(getUsers());
     }
 
     return () => setLoadingUser(false);
