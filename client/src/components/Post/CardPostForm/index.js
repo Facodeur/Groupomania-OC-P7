@@ -42,8 +42,8 @@ const CardPostForm = () => {
       if (file) {
         data.append("image", file);
       }
-      dispatch(addPost(data));
-      dispatch(getPosts());
+      dispatch(addPost(data))
+      .then(() => dispatch(getPosts()))
       cancelPost();
     } else {
       alert("Veuillez entrer un message");
