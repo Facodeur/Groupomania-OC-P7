@@ -18,10 +18,12 @@ import {
   IconWrap,
   UpdateIcon,
 } from "./CardPostElements";
+import CardComment from "../CardComment";
 
 const CardPost = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const userData = useSelector((state) => state.userReducer);
 
   console.log(post);
@@ -53,7 +55,8 @@ const CardPost = ({ post }) => {
 
           <CardFooter>
             <IconWrap>
-              <IconComment /> <p>{post.Comments.length}</p>
+              <IconComment onClick={() => setShowComments(!showComments)} />{" "}
+              <p>{post.Comments.length}</p>
             </IconWrap>
             {userData.id === post.userId && (
               <IconWrap>
@@ -62,6 +65,7 @@ const CardPost = ({ post }) => {
               </IconWrap>
             )}
           </CardFooter>
+          {showComments && <CardComment post={post} />}
         </>
       )}
     </CardContainer>
