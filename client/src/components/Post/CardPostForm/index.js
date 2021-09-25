@@ -27,13 +27,14 @@ import {
 
 const CardPostForm = () => {
   const fileInputRef = useRef();
+
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [picture, setPicture] = useState(null);
   const [file, setFile] = useState();
+  
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  console.log("form", userData);
 
   const handlePost = () => {
     if (message || picture) {

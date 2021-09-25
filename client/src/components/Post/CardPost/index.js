@@ -26,8 +26,6 @@ const CardPost = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const userData = useSelector((state) => state.userReducer);
 
-  console.log(post);
-
   useEffect(() => {
     post && setIsLoading(false);
   }, [post]);

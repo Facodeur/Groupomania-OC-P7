@@ -6,7 +6,6 @@ import CardPostForm from "../../components/Post/CardPostForm";
 
 const Home = () => {
   const  { authUser }  = useContext(UserContext);
-  console.log("home", authUser)
 
   return (
     <HomeContainer>
