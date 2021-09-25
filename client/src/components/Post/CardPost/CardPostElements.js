@@ -8,7 +8,7 @@ export const CardContainer = styled.li`
   border: 1px solid #15cdfc;
   border-radius: 5px;
   padding: 15px;
-  margin: 10px;
+  margin: 5px;
   max-width: 768px;
 `
 
