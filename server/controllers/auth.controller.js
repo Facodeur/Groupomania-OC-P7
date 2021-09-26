@@ -45,7 +45,7 @@ exports.signIn = (req, res) => {
         let password = req.body.password;
         if (bcrypt.compareSync(password, user.password)) {
           // génération du token
-          let token = JWT.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+          let token = JWT.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.TOKEN_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN,
           });
           
