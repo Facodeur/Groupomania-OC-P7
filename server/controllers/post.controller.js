@@ -60,11 +60,12 @@ exports.createPost = (req, res) => {
 
 exports.updatePost = (req, res) => {
   const user_id = res.locals.user.id;
+  const isAdmin = res.locals.user.isAdmin;
 
   postModel
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
-      if (post.userId === user_id) {
+      if (post.userId === user_id || isAdmin === 1 ) {
         postModel
           .update(
             {
