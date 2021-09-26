@@ -140,6 +140,7 @@ exports.commentPost = (req, res) => {
 
 exports.editCommentPost = (req, res) => {
   const user_id = res.locals.user.id;
+  const isAdmin = res.locals.user.isAdmin;
 
   postModel
     .findOne({
@@ -160,7 +161,7 @@ exports.editCommentPost = (req, res) => {
           if (comment.postId !== +req.params.id) {
             res.status(404).json({ message: "Erreur id post" });
           }
-          if (comment.userId === user_id) {
+          if (comment.userId === user_id || isAdmin === 1) {
             commentModel
               .update(
                 {
