@@ -56,7 +56,7 @@ const CardPost = ({ post }) => {
               <IconComment onClick={() => setShowComments(!showComments)} />{" "}
               <p>{post.Comments.length}</p>
             </IconWrap>
-            {userData.id === post.userId && (
+            {(userData.id === post.userId || userData.isAdmin === 1) && (
               <IconWrap>
                 <UpdateIcon onClick={() => setIsUpdated(!isUpdated)} />
                 <BtnDeletePost idPost={post.id} />
