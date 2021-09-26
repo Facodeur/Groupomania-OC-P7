@@ -1,6 +1,7 @@
 const postModel = require("../models").Post;
 const userModel = require("../models").User;
 const commentModel = require("../models").Comment;
+const fs = require("fs");
 
 exports.getAllPosts = (req, res) => {
   postModel
@@ -18,7 +19,7 @@ exports.getAllPosts = (req, res) => {
       ],
     })
     .then((posts) => {
-      res.status(200).send( posts );
+      res.status(200).send(posts);
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
@@ -38,8 +39,11 @@ exports.createPost = (req, res) => {
         postModel
           .create({
             content: req.body.content,
-            picture: req.file !== undefined ? `./upload/posts/${req.file.filename}` : "",
-            userId: user.id
+            picture:
+              req.file !== undefined
+                ? `./upload/posts/${req.file.filename}`
+                : "",
+            userId: user.id,
           })
           .then(() => {
             res.status(201).json({ message: "Post enregistré" });
@@ -90,13 +94,17 @@ exports.deletePost = (req, res) => {
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
       if (post.userId === user_id) {
-        postModel
-          .destroy({ where: { id: req.params.id } })
-          .then((post) => {
-            if (post === 1) {
-              res.status(200).json({ message: "Post supprimé avec succés" });
-            }
-          });
+        const filename = post.picture.split("/upload/posts/")[1];
+
+        fs.unlink(`../client/public/upload/posts/${filename}`, () => {
+          postModel
+            .destroy({ where: { id: req.params.id } })
+            .then((post) => {
+              if (post === 1) {
+                res.status(200).json({ message: "Post supprimé avec succés" });
+              }
+            });
+        });
       } else {
         res.status(401).json({ message: "Vous n'êtes pas autorisé" });
       }
@@ -146,8 +154,8 @@ exports.editCommentPost = (req, res) => {
           where: { id: req.body.idComment },
         })
         .then((comment) => {
-          if(comment.postId !== +req.params.id) {
-            res.status(404).json({ message: "Erreur id post"})
+          if (comment.postId !== +req.params.id) {
+            res.status(404).json({ message: "Erreur id post" });
           }
           if (comment.userId === user_id) {
             commentModel
@@ -189,11 +197,9 @@ exports.deleteCommentPost = (req, res) => {
           where: { id: req.body.idComment },
         })
         .then((comment) => {
-          
-          if(comment.postId !== +req.params.id) {
-            res.status(404).json({ message: "Erreur id post"})
-          } 
-          else if (comment.userId === user_id) {
+          if (comment.postId !== +req.params.id) {
+            res.status(404).json({ message: "Erreur id post" });
+          } else if (comment.userId === user_id) {
             commentModel
               .destroy({
                 where: { id: req.body.idComment },
@@ -201,8 +207,7 @@ exports.deleteCommentPost = (req, res) => {
               .then(() => {
                 res.status(200).json({ message: "Commentaire supprimé" });
               });
-          } 
-          else {
+          } else {
             res.status(401).json({ message: "Vous n'êtes pas autorisé" });
           }
         })
