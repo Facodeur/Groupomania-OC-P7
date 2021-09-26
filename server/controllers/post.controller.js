@@ -89,14 +89,16 @@ exports.updatePost = (req, res) => {
 
 exports.deletePost = (req, res) => {
   const user_id = res.locals.user.id;
+  const isAdmin = res.locals.user.isAdmin;
 
   postModel
-    .findOne({ where: { id: req.params.id } })
-    .then((post) => {
-      if (post.userId === user_id) {
-        const filename = post.picture.split("/upload/posts/")[1];
-
-        fs.unlink(`../client/public/upload/posts/${filename}`, () => {
+  .findOne({ where: { id: req.params.id } })
+  .then((post) => {
+    if (post.userId === user_id || isAdmin === 1 ) {
+      const filename = post.picture.split("/upload/posts/")[1];
+      
+      fs.unlink(`../client/public/upload/posts/${filename}`, () => {
+        
           postModel
             .destroy({ where: { id: req.params.id } })
             .then((post) => {
