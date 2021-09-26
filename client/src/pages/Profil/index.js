@@ -7,7 +7,7 @@ import {
   Container,
   ProfilWrap,
   ProfilCard,
-  ProfilTitre,
+  ProfilName,
   ProfilDesc,
   ButtonDelete,
   ProfilRow,
@@ -41,10 +41,10 @@ const Profil = () => {
       <Container>
         <ProfilWrap>
           <ProfilCard>
-            <ProfilTitre>{userData.username}</ProfilTitre>
+            <ProfilName>{userData.username}</ProfilName>
             <ProfilDesc>Email: {userData.email}</ProfilDesc>
             <ProfilDesc>Membre depuis le : </ProfilDesc>
-            <ProfilDesc>{dateParser(userData.createAt)}</ProfilDesc>
+            <ProfilDesc>{dateParser(userData.createdAt)}</ProfilDesc>
             <ProfilRow>
               <ButtonDelete onClick={() => handleDeleteUser(userData.id)}>
                 Supprimer le compte

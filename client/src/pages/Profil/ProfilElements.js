@@ -25,7 +25,7 @@ export const ProfilCard = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 `;
 
-export const ProfilTitre = styled.h2`
+export const ProfilName = styled.h2`
   color: #fff;
   text-align: center;
 `;
