@@ -184,6 +184,7 @@ exports.editCommentPost = (req, res) => {
 
 exports.deleteCommentPost = (req, res) => {
   const user_id = res.locals.user.id;
+  const isAdmin = res.locals.user.isAdmin;
 
   postModel
     .findOne({
@@ -203,7 +204,7 @@ exports.deleteCommentPost = (req, res) => {
         .then((comment) => {
           if (comment.postId !== +req.params.id) {
             res.status(404).json({ message: "Erreur id post" });
-          } else if (comment.userId === user_id) {
+          } else if (comment.userId === user_id || isAdmin === 1) {
             commentModel
               .destroy({
                 where: { id: req.body.idComment },
