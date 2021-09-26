@@ -46,7 +46,11 @@ const Profil = () => {
             <ProfilDesc>Membre depuis le : </ProfilDesc>
             <ProfilDesc>{dateParser(userData.createdAt)}</ProfilDesc>
             <ProfilRow>
-              <ButtonDelete onClick={() => handleDeleteUser(userData.id)}>
+              <ButtonDelete onClick={() => {
+                if (window.confirm("Confirmation de suppression du compte")) {
+                  handleDeleteUser(userData.id)}
+                }
+              }>
                 Supprimer le compte
               </ButtonDelete>
             </ProfilRow>
