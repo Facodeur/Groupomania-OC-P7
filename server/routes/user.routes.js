@@ -12,7 +12,11 @@ router.get("/logout", authController.logout);
 
 //jwt récupération de l'id user
 router.get('/jwtid', authJwt, (req, res) => {
-  res.status(200).json(res.locals.user.id)
+  const user = {
+    id: res.locals.user.id,
+    isAdmin: res.locals.user.isAdmin
+  }
+  res.status(200).json(user)
 });
 
 // Données utilisateur
