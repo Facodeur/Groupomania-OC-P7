@@ -45,15 +45,17 @@ const Profil = () => {
             <ProfilDesc>Email: {userData.email}</ProfilDesc>
             <ProfilDesc>Membre depuis le : </ProfilDesc>
             <ProfilDesc>{dateParser(userData.createdAt)}</ProfilDesc>
-            <ProfilRow>
-              <ButtonDelete onClick={() => {
-                if (window.confirm("Confirmation de suppression du compte")) {
-                  handleDeleteUser(userData.id)}
-                }
-              }>
-                Supprimer le compte
-              </ButtonDelete>
-            </ProfilRow>
+            {userData.isAdmin === 0 && (
+              <ProfilRow>
+                <ButtonDelete onClick={() => {
+                  if (window.confirm("Confirmation de suppression du compte")) {
+                    handleDeleteUser(userData.id)}
+                  }
+                }>
+                  Supprimer le compte
+                </ButtonDelete>
+              </ProfilRow>
+            )}
           </ProfilCard>
         </ProfilWrap>
       </Container>
