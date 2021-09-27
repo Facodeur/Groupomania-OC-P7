@@ -56,15 +56,18 @@ exports.userUpdate = (req, res) => {
 // Supprimer l'utilisateur avec son id
 exports.userDelete = (req, res) => {
   const userIdConnected = res.locals.user.id;
+  const isAdmin = res.locals.user.isAdmin;
 
   userModel
     .findOne({ where: { id: req.params.id } })
     .then((user) => {
-      if (user.id === userIdConnected) {
+      if (user.id === userIdConnected || isAdmin === 1) {
         userModel
           .destroy({ where: { id: req.params.id } })
           .then(() => {
-            res.cookie("jwt", '', { maxAge: 1 })
+            if(isAdmin === 0) {
+              res.cookie("jwt", '', { maxAge: 1 })
+            }
             res.status(200).json({ message: "Compte supprimé avec succes" });
           });
       } else {
