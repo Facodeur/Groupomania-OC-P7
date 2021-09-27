@@ -29,7 +29,7 @@ const EditDeleteComment = ({ comment, postId }) => {
 
   useEffect(() => {
     const checkAuthor = () => {
-      if (authUser === comment.userId) {
+      if (authUser.id === comment.userId || authUser.isAdmin === 1) {
         setIsAuthor(true);
       }
     };
