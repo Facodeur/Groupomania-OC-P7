@@ -6,9 +6,9 @@ import { UserContext } from "../../../context/UserContext";
 import { dateParser } from "../../../utils/date-parser";
 import {
   AlertMessage,
+  BtnDelete,
   Table,
   TableContainer,
-  Tbody,
   Td,
   Th,
   Tr,
@@ -43,12 +43,12 @@ const BoardAdmin = () => {
             <Th>Id</Th>
             <Th>Nom utilisateur</Th>
             <Th>Email</Th>
-            <Th>Admin</Th>
+            <Th>Rôle</Th>
             <Th>Inscrition</Th>
             <Th>Supprimer</Th>
           </tr>
         </thead>
-        <Tbody>
+        <tbody>
           {usersData.map((user, index) => (
             <Tr key={user.id} bgColor={index % 2 === 0 ? "#fff" : "#ddd"}>
               <Td>{user.id}</Td>
@@ -58,18 +58,18 @@ const BoardAdmin = () => {
               <Td>{dateParser(user.createdAt)}</Td>
               <Td>
                 {user.isAdmin === 0 && (
-                  <button onClick={() => {
+                  <BtnDelete onClick={() => {
                     if (window.confirm("Confirmer la suppression du compte")) {
                       handleDeleteUser(user.id)}
                     }
                   }>
                     Supprimer
-                  </button>
+                  </BtnDelete>
                 )}
               </Td>
             </Tr>
           ))}
-        </Tbody>
+        </tbody>
       </Table>
     </TableContainer>
   );

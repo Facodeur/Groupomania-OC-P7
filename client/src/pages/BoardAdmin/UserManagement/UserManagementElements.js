@@ -10,13 +10,9 @@ export const TableContainer = styled.div`
 export const Table = styled.table`
   border-collapse: collapse;
   border-spacing: 0;
-  
   margin: 3px;
-  max-width: 768px;
+  max-width: 665px;
   width:100%;
-`
-export const Tbody = styled.tbody`
-  
 `
 
 export const Th = styled.th`
@@ -26,7 +22,6 @@ export const Th = styled.th`
 
 export const Tr = styled.tr`
 background: ${({bgColor}) => bgColor};
-border: 1px solid #a4b0be;
 height: 40px;
 `
 
@@ -35,6 +30,23 @@ export const Td = styled.td`
   text-align: center;
   padding: 16px;
   
+`
+
+export const BtnDelete = styled.button`
+  height: 30px;
+  padding: 3px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background: #ea2027;
+  font-weight: bold;
+
+  &:hover {
+    color: #ea2027;
+    background: #000;
+    cursor: pointer;
+    transition: 0.2s;
+  }
 `
 
 export const AlertMessage = styled.p`
