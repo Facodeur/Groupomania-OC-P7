@@ -15,6 +15,7 @@ export const CardRow = styled.div`
   display: flex;
   align-items: center;
   margin: 20px;
+  padding-top: 10px;
 `
 
 export const CardTextarea = styled.textarea`
@@ -64,6 +65,24 @@ export const BtnSend = styled.button`
   font-size: 0.9rem;
   font-weight: bold;
   width: 120px;
+  
+  &:hover {
+    cursor: pointer;
+    transition: 0.2s;
+    opacity: 0.9;
+  }
+`
+
+export const BtnAnnule = styled.button`
+  background: #FD7272;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin-bottom: 15px;
+  margin-right: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
   
   &:hover {
     cursor: pointer;
