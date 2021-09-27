@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "../../actions/user.actions";
 import { dateParser } from "../../utils/date-parser";
@@ -17,6 +17,8 @@ import {
 const Profil = () => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  const [alertMessage, setAlertMessage] = useState(false)
+
 
   const removeCookie = (key) => {
     if (window !== undefined) {
@@ -27,10 +29,12 @@ const Profil = () => {
   const handleDeleteUser = (id) => {
     dispatch(deleteUser(id));
     removeCookie("jwt");
+    setAlertMessage(true)
   };
 
-  if (userData.message) {
+  if (alertMessage) {
     setTimeout(() => {
+      setAlertMessage(false)
       window.location = "/";
     }, 2000);
     return <AlertMessage>{userData.message}</AlertMessage>;
