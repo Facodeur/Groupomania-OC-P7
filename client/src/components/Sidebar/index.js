@@ -23,6 +23,9 @@ const Sidebar = ({ isOpen, toggle }) => {
       <SidebarWrapper>
         {authUser ? (
           <SidebarMenu>
+            {authUser.isAdmin === 1 && (
+              <SidebarLink to="/board-admin">Gestion utilisateur</SidebarLink>
+            )}
             <SidebarLink to="/profil" onClick={toggle}>
               Profile
             </SidebarLink>
