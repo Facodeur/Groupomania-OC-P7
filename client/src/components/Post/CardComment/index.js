@@ -11,6 +11,7 @@ import {
   Icon,
 } from "../CardPost/CardPostElements";
 import EditDeleteComment from "../EditDeleteComment";
+import { BtnSend, Form, Input } from "./CardCommentElements";
 
 const CardComment = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
@@ -53,16 +54,16 @@ const CardComment = ({ post }) => {
         );
       })}
       {user.id && (
-        <form onSubmit={handleComment}>
-          <input
+        <Form onSubmit={handleComment}>
+          <Input
             type="text"
             name="text"
             value={text}
             placeholder="Laisser un commentaire"
             onChange={(e) => setText(e.target.value)}
           />
-          <input type="submit" value="Envoyer" />
-        </form>
+          <BtnSend type="submit" value="Envoyer" />
+        </Form>
       )}
     </ul>
   );
