@@ -25,6 +25,9 @@ const Navbar = ({ toggle }) => {
         <Bars onClick={toggle} />
         {authUser ? (
           <NavMenu>
+            {authUser.isAdmin === 1 && (
+              <NavLink to="/board-admin">Gestion utilisateur</NavLink>
+            )}
             <NavLink to="/profil">
               <ProfilIcon />
               <h4>{userData.username}</h4>
