@@ -16,6 +16,7 @@ import {
   FormCheck,
   FormSpan,
   FormLink,
+  AlertMessage,
 } from "../FormElements";
 
 const SignupForm = () => {
@@ -30,6 +31,8 @@ const SignupForm = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [termsCheck, setTermsCheck] = useState(false);
   const [termsError, setTermsError] = useState("");
+  const [alertMessage, setAlertMessage] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,7 +68,11 @@ const SignupForm = () => {
             setEmailError(res.data.errors.email);
             setPasswordError(res.data.errors.password);
           } else if (res.status === 201) {
-            history.push("/signin");
+            setAlertMessage(true);
+              setTimeout(() => {
+                setAlertMessage(false);
+                history.push("/signin");
+              }, 3000);
           }
         })
         .catch((err) => console.log(err));
@@ -74,6 +81,7 @@ const SignupForm = () => {
 
   return (
     <>
+    {alertMessage && <AlertMessage>Inscription réussi, connectez vous !</AlertMessage>}
       <Container>
         <FormWrap>
           <FormContent>

@@ -70,10 +70,11 @@ export const FormButton = styled.button`
   font-size: 20px;
   cursor: pointer;
 `;
+
 export const TextError = styled.p`
   color: red;
   margin-top: 5px;
-  text-align: ${({center}) => center ? "center" : ""}
+  text-align: ${({center}) => center ? "center" : ""};
 `;
 
 export const FormRow = styled.div`
@@ -95,3 +96,12 @@ export const FormSpan = styled.span`
 export const FormLink = styled.a`
   color: #15cdfc;
 `
+
+export const AlertMessage = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background: #10ac84;
+  height: 50px;
+`;
