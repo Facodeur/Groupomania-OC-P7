@@ -33,7 +33,10 @@ const EditDeleteComment = ({ comment, postId }) => {
         setIsAuthor(true);
       }
     };
-    checkAuthor();
+    if(authUser) {
+      checkAuthor();
+    }
+    
   }, [authUser, comment.userId]);
 
   return (
