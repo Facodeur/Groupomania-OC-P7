@@ -5,6 +5,7 @@ import { deleteComment, editComment } from "../../../actions/post.action";
 import { UserContext } from "../../../context/UserContext";
 import { DeleteIcon } from "../BtnDeletePost/BtnDeletePostElements";
 import { IconWrap, UpdateIcon } from "../CardPost/CardPostElements";
+import { BtnInput, BtnToCancel, Form, Input } from "./EditDeleteCommentElements";
 
 const EditDeleteComment = ({ comment, postId }) => {
   const [isAuthor, setIsAuthor] = useState(false);
@@ -47,17 +48,17 @@ const EditDeleteComment = ({ comment, postId }) => {
         </IconWrap>
       )}
       {isAuthor && edit && (
-        <form onSubmit={handleEdit}>
-          <label htmlFor="text" onClick={() => setEdit(!edit)}>
+        <Form onSubmit={handleEdit}>
+          <BtnToCancel onClick={() => setEdit(!edit)}>
             annuler
-          </label>
-          <input
+          </BtnToCancel>
+          <Input
             type="text"
             name="text"
             onChange={(e) => setText(e.target.value)}
             defaultValue={comment.content}
           />
-          <input type="submit" value="Valider modifications" />
+          <BtnInput type="submit" value="Valider" />
           <DeleteIcon
             onClick={() => {
               if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
@@ -65,7 +66,7 @@ const EditDeleteComment = ({ comment, postId }) => {
               }
             }}
           />
-        </form>
+        </Form>
       )}
     </>
   );
