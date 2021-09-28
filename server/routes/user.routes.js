@@ -20,7 +20,7 @@ router.get('/jwtid', authJwt, (req, res) => {
 });
 
 // Données utilisateur
-router.get('/', authJwt, userController.getAllUsers);
+router.get('/', userController.getAllUsers);
 router.get("/profile", authJwt, userController.userInfo);
 router.put("/:id", authJwt, userController.userUpdate);
 router.delete("/:id", authJwt, userController.userDelete);
