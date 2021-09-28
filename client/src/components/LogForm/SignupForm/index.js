@@ -33,7 +33,6 @@ const SignupForm = () => {
   const [termsError, setTermsError] = useState("");
   const [alertMessage, setAlertMessage] = useState(false);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setUsernameError("");
@@ -69,10 +68,10 @@ const SignupForm = () => {
             setPasswordError(res.data.errors.password);
           } else if (res.status === 201) {
             setAlertMessage(true);
-              setTimeout(() => {
-                setAlertMessage(false);
-                history.push("/signin");
-              }, 3000);
+            setTimeout(() => {
+              setAlertMessage(false);
+              history.push("/signin");
+            }, 3000);
           }
         })
         .catch((err) => console.log(err));
@@ -81,7 +80,9 @@ const SignupForm = () => {
 
   return (
     <>
-    {alertMessage && <AlertMessage>Inscription réussi, connectez vous !</AlertMessage>}
+      {alertMessage && (
+        <AlertMessage>Inscription réussi, connectez vous !</AlertMessage>
+      )}
       <Container>
         <FormWrap>
           <FormContent>
