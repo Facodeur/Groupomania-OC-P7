@@ -1,5 +1,6 @@
 const multer = require("multer");
 const crypto = require("crypto");
+const maxSize = 2 * 1024 * 1024 // 2mb
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -18,4 +19,4 @@ const storage = multer.diskStorage({
   }
 });
 
-module.exports = multer({ storage: storage, limits: { fileSize: 2000000 } }).single('image');
+module.exports = multer({ storage: storage, limits: { fileSize: maxSize } }).single('image');
