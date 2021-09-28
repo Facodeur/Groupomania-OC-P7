@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getPosts } from "../../../actions/post.action";
+import { UserContext } from "../../../context/UserContext";
 import { dateParser } from "../../../utils/date-parser";
 import {
   CardContainer,
@@ -14,15 +15,13 @@ import EditDeleteComment from "../EditDeleteComment";
 import { BtnSend, Form, Input } from "./CardCommentElements";
 
 const CardComment = ({ post }) => {
+  const { authUser } = useContext(UserContext);
   const usersData = useSelector((state) => state.usersReducer);
-  const user = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  
   const [text, setText] = useState("");
 
   const handleComment = (e) => {
     e.preventDefault();
-
     if(text) {
       dispatch(addComment(post.id, text))
       .then(() => dispatch(getPosts()))
@@ -53,7 +52,7 @@ const CardComment = ({ post }) => {
           </CardContainer>
         );
       })}
-      {user.id && (
+      {authUser && (
         <Form onSubmit={handleComment}>
           <Input
             type="text"
