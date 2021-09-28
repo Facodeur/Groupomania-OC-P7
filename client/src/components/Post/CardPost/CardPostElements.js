@@ -81,6 +81,7 @@ export const UpdateIcon = styled(BiEdit)`
 
 export const IconWrap = styled.div`
   display: flex;
+  justify-content: flex-end;
 `
 
 export const DatePosted = styled.p`
