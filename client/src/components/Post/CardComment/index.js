@@ -39,7 +39,7 @@ const CardComment = ({ post }) => {
               <CardUsername>
                 <Icon />
                 <p>
-                  {usersData.map((user) => {
+                  {usersData && usersData.map((user) => {
                     if (user.id === comment.userId) {
                       return user.username;
                     } else return null;
