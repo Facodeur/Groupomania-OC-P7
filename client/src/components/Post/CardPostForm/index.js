@@ -33,19 +33,25 @@ const CardPostForm = () => {
   const [message, setMessage] = useState("");
   const [picture, setPicture] = useState(null);
   const [file, setFile] = useState();
-  
+
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const handlePost = () => {
+    
+    if (file.size > 2000000) {
+      alert("Le fichier ne doit pas depasser 2mo");
+      return;
+    }
     if (message || picture) {
       const data = new FormData();
       data.append("content", message);
+
       if (file) {
         data.append("image", file);
       }
       dispatch(addPost(data))
-      .then(() => dispatch(getPosts()))
+      .then(() => dispatch(getPosts()));
       cancelPost();
     } else {
       alert("Veuillez entrer un message");
