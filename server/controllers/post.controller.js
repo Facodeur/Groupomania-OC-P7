@@ -32,9 +32,6 @@ exports.createPost = (req, res) => {
   userModel
     .findOne({ where: { id: user_id } })
     .then((user) => {
-      if (req.body.content === "" || req.body.content === undefined) {
-        res.status(400).json({ message: "Veuillez écrire quelque chose" });
-      }
       if (user) {
         postModel
           .create({
