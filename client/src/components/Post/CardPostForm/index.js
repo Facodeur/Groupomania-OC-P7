@@ -39,8 +39,8 @@ const CardPostForm = () => {
 
   const handlePost = () => {
     
-    if (file.size > 2000000) {
-      alert("Le fichier ne doit pas depasser 2mo");
+    if (file && file.size > 2000000) {
+      alert("Le fichier ne doit pas depasser 2MB");
       return;
     }
     if (message || picture) {
