@@ -15,7 +15,7 @@ import {
   BtnPictureWrapper,
   BtnSend,
   MessageWrapper,
-  BtnAnnule,
+  BtnToCancel,
 } from "./CardPostFormElements";
 import {
   CardHeader,
@@ -122,7 +122,7 @@ const CardPostForm = () => {
               />
             </BtnPictureWrapper>
             {message || picture ? (
-              <BtnAnnule onClick={cancelPost}>Annuler message</BtnAnnule>
+              <BtnToCancel onClick={cancelPost}>Annuler message</BtnToCancel>
             ) : null}
             <BtnSend onClick={handlePost}>Envoyer</BtnSend>
           </CardFooter>

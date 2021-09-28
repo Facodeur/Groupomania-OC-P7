@@ -73,7 +73,7 @@ export const BtnSend = styled.button`
   }
 `
 
-export const BtnAnnule = styled.button`
+export const BtnToCancel = styled.button`
   background: #FD7272;
   color: #fff;
   border: none;
