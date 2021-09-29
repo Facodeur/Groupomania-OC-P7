@@ -4,7 +4,7 @@ export const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin: 30px 0;
 `
 
 export const Table = styled.table`

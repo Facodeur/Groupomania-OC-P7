@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "../../../actions/user.actions";
 import { getUsers } from "../../../actions/users.action";
+import Modal from "../../../components/Modal";
+import { Button } from "../../../components/Post/BtnDeletePost/BtnDeletePostElements";
 import { UserContext } from "../../../context/UserContext";
 import { dateParser } from "../../../utils/date-parser";
 import {
@@ -18,21 +20,27 @@ const BoardAdmin = () => {
   const { setLoadingUser } = useContext(UserContext);
   const usersData = useSelector((state) => state.usersReducer);
   const dispatch = useDispatch();
-  const [alertMessage, setAlertMessage] = useState(false)
 
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch])
 
   const handleDeleteUser = (id) => {
-    dispatch(deleteUser(id))
+    dispatch(deleteUser(id));
     setAlertMessage(true);
     setLoadingUser(true);
-  }
+    setShowModal(false);
+  };
 
   if (alertMessage) {
     setTimeout(() => {
       dispatch(getUsers());
       setAlertMessage(false);
     }, 2000);
-   return <AlertMessage>Compte supprimé avec succes</AlertMessage>;
+    return <AlertMessage>Compte supprimé avec succes</AlertMessage>;
   }
 
   return (
@@ -58,13 +66,17 @@ const BoardAdmin = () => {
               <Td>{dateParser(user.createdAt)}</Td>
               <Td>
                 {user.isAdmin === 0 && (
-                  <BtnDelete onClick={() => {
-                    if (window.confirm("Confirmer la suppression du compte")) {
-                      handleDeleteUser(user.id)}
-                    }
-                  }>
-                    Supprimer
-                  </BtnDelete>
+                  <>
+                    <BtnDelete onClick={() => setShowModal(!showModal)}>
+                      Supprimer
+                    </BtnDelete>
+                    <Modal showModal={showModal} setShowModal={setShowModal}>
+                      <p>Confirmez-vous la suppression ?</p>
+                      <Button onClick={() => handleDeleteUser(user.id)}>
+                        Confirmer
+                      </Button>
+                    </Modal>
+                  </>
                 )}
               </Td>
             </Tr>
