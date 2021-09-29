@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiOutlinePicture } from "react-icons/ai";
 import { timestampParser } from "../../../utils/date-parser";
 import { addPost, getPosts } from "../../../actions/post.action";
+import Modal from "../../Modal";
 import {
   CardContenair,
   CardTextarea,
@@ -33,14 +34,17 @@ const CardPostForm = () => {
   const [message, setMessage] = useState("");
   const [picture, setPicture] = useState(null);
   const [file, setFile] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [alertError, setAlertError] = useState("");
 
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const handlePost = () => {
-    
+
     if (file && file.size > 2000000) {
-      alert("Le fichier ne doit pas depasser 2MB");
+      setAlertError("errorFile");
+      setShowModal(true);
       return;
     }
     if (message || picture) {
@@ -50,11 +54,11 @@ const CardPostForm = () => {
       if (file) {
         data.append("image", file);
       }
-      dispatch(addPost(data))
-      .then(() => dispatch(getPosts()));
+      dispatch(addPost(data)).then(() => dispatch(getPosts()));
       cancelPost();
     } else {
-      alert("Veuillez entrer un message");
+      setAlertError("errorSend");
+      setShowModal(true);
     }
   };
 
@@ -76,59 +80,71 @@ const CardPostForm = () => {
   }, [userData]);
 
   return (
-    <CardContenair>
-      {isLoading ? (
-        <LoadingIcon>
-          <FaSpinner className="fa-spin" />
-        </LoadingIcon>
-      ) : (
-        <>
-          <CardRow>
-            <ProfilIcon />
-            <CardTextarea
-              name="message"
-              placeholder={`Quoi de neuf ${userData.username} ?`}
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-            />
-          </CardRow>
-          {message || picture ? (
-            <>
-              <MessageWrapper>
-                <CardHeader>
-                  <CardUsername>
-                    <Icon />
-                    {userData.username}
-                  </CardUsername>
-                  <DatePosted>{timestampParser(Date.now())}</DatePosted>
-                </CardHeader>
-                <CardText>{message}</CardText>
-                <CardPicture src={picture} />
-              </MessageWrapper>
-            </>
-          ) : null}
-          <CardFooter>
-            <BtnPictureWrapper>
-              <BtnIcon onClick={() => fileInputRef.current.click()}>
-                <AiOutlinePicture />
-              </BtnIcon>
-              <input
-                ref={fileInputRef}
-                type="file"
-                name="file"
-                onChange={(e) => handlePicture(e)}
-                accept=".jpg, .jpeg, .png, .gif"
-                hidden
-              />
-            </BtnPictureWrapper>
-            {message || picture ? (
-              <BtnToCancel onClick={cancelPost}>Annuler message</BtnToCancel>
-            ) : null}
-            <BtnSend onClick={handlePost}>Envoyer</BtnSend>
-          </CardFooter>
-        </>
+    <>
+      {alertError === "errorFile" && (
+        <Modal showModal={showModal} setShowModal={setShowModal}>
+          <p>Le fichier ne doit pas depasser 2MB</p>
+        </Modal>
       )}
-    </CardContenair>
+      {alertError === "errorSend" && (
+        <Modal showModal={showModal} setShowModal={setShowModal}>
+          <p>Veuillez entrer un message ou une image</p>
+        </Modal>
+      )}
+      <CardContenair>
+        {isLoading ? (
+          <LoadingIcon>
+            <FaSpinner className="fa-spin" />
+          </LoadingIcon>
+        ) : (
+          <>
+            <CardRow>
+              <ProfilIcon />
+              <CardTextarea
+                name="message"
+                placeholder={`Quoi de neuf ${userData.username} ?`}
+                onChange={(e) => setMessage(e.target.value)}
+                value={message}
+              />
+            </CardRow>
+            {(message || picture) && (
+              <>
+                <MessageWrapper>
+                  <CardHeader>
+                    <CardUsername>
+                      <Icon />
+                      {userData.username}
+                    </CardUsername>
+                    <DatePosted>{timestampParser(Date.now())}</DatePosted>
+                  </CardHeader>
+                  <CardText>{message}</CardText>
+                  <CardPicture src={picture} />
+                </MessageWrapper>
+              </>
+            )}
+            <CardFooter>
+              <BtnPictureWrapper>
+                <BtnIcon onClick={() => fileInputRef.current.click()}>
+                  <AiOutlinePicture />
+                </BtnIcon>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  name="file"
+                  onChange={(e) => handlePicture(e)}
+                  accept=".jpg, .jpeg, .png, .gif"
+                  hidden
+                />
+              </BtnPictureWrapper>
+              {(message || picture) && (
+                <BtnToCancel onClick={cancelPost}>Annuler message</BtnToCancel>
+              )}
+              <BtnSend onClick={handlePost}>Envoyer</BtnSend>
+            </CardFooter>
+          </>
+        )}
+      </CardContenair>
+    </>
   );
 };
 
