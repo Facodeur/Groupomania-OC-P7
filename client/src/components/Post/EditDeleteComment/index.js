@@ -3,16 +3,24 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { deleteComment, editComment } from "../../../actions/post.action";
 import { UserContext } from "../../../context/UserContext";
-import { DeleteIcon } from "../BtnDeletePost/BtnDeletePostElements";
+import Modal from "../../Modal";
+import { Button, DeleteIcon } from "../BtnDeletePost/BtnDeletePostElements";
 import { IconWrap, UpdateIcon } from "../CardPost/CardPostElements";
-import { BtnInput, BtnToCancel, Form, Input } from "./EditDeleteCommentElements";
+import {
+  BtnInput,
+  BtnToCancel,
+  Form,
+  Input,
+} from "./EditDeleteCommentElements";
 
 const EditDeleteComment = ({ comment, postId }) => {
+  const { authUser } = useContext(UserContext);
+  const dispatch = useDispatch();
+
   const [isAuthor, setIsAuthor] = useState(false);
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
-  const { authUser } = useContext(UserContext);
-  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -34,14 +42,17 @@ const EditDeleteComment = ({ comment, postId }) => {
         setIsAuthor(true);
       }
     };
-    if(authUser) {
+    if (authUser) {
       checkAuthor();
     }
-    
   }, [authUser, comment.userId]);
 
   return (
     <>
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <p>Confirmez-vous la suppression ?</p>
+        <Button onClick={handleDelete}>Confirmer</Button>
+      </Modal>
       {isAuthor && edit === false && (
         <IconWrap>
           <UpdateIcon onClick={() => setEdit(!edit)} />
@@ -49,9 +60,7 @@ const EditDeleteComment = ({ comment, postId }) => {
       )}
       {isAuthor && edit && (
         <Form onSubmit={handleEdit}>
-          <BtnToCancel onClick={() => setEdit(!edit)}>
-            annuler
-          </BtnToCancel>
+          <BtnToCancel onClick={() => setEdit(!edit)}>annuler</BtnToCancel>
           <Input
             type="text"
             name="text"
@@ -59,13 +68,7 @@ const EditDeleteComment = ({ comment, postId }) => {
             defaultValue={comment.content}
           />
           <BtnInput type="submit" value="Valider" />
-          <DeleteIcon
-            onClick={() => {
-              if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
-                handleDelete();
-              }
-            }}
-          />
+          <DeleteIcon onClick={() => setShowModal(!showModal)} />
         </Form>
       )}
     </>

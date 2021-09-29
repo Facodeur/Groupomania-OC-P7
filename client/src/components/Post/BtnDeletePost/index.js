@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deletePost } from "../../../actions/post.action";
-import { DeleteIcon } from "./BtnDeletePostElements";
+import Modal from "../../Modal";
+import { Button, DeleteIcon } from "./BtnDeletePostElements";
 
 const BtnDeletePost = ({ idPost }) => {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   const deleteQuote = () => {
     dispatch(deletePost(idPost));
   };
 
   return (
-    <DeleteIcon
-      onClick={() => {
-        if (window.confirm("Voulez-vous supprimer cet article ?")) {
-          deleteQuote();
-        }
-      }}
-    />
+    <>
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <p>Confirmez-vous la suppression du post ?</p>
+        <Button onClick={deleteQuote}>Supprimer</Button>
+      </Modal>
+      <DeleteIcon onClick={() => setShowModal(!showModal)} />
+    </>
   );
 };
 
