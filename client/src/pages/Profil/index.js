@@ -13,12 +13,15 @@ import {
   ProfilRow,
   AlertMessage,
 } from "./ProfilElements";
+import Modal from "../../components/Modal";
+import { Button } from "../../components/Post/BtnDeletePost/BtnDeletePostElements";
 
 const Profil = () => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  const [alertMessage, setAlertMessage] = useState(false)
 
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const removeCookie = (key) => {
     if (window !== undefined) {
@@ -29,12 +32,12 @@ const Profil = () => {
   const handleDeleteUser = (id) => {
     dispatch(deleteUser(id));
     removeCookie("jwt");
-    setAlertMessage(true)
+    setAlertMessage(true);
   };
 
   if (alertMessage) {
     setTimeout(() => {
-      setAlertMessage(false)
+      setAlertMessage(false);
       window.location = "/";
     }, 2000);
     return <AlertMessage>{userData.message}</AlertMessage>;
@@ -42,6 +45,10 @@ const Profil = () => {
 
   return (
     <>
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <p>Confirmez-vous la suppression ?</p>
+        <Button onClick={() => handleDeleteUser(userData.id)}>Confirmer</Button>
+      </Modal>
       <Container>
         <ProfilWrap>
           <ProfilCard>
@@ -51,11 +58,7 @@ const Profil = () => {
             <ProfilDesc>{dateParser(userData.createdAt)}</ProfilDesc>
             {userData.isAdmin === 0 && (
               <ProfilRow>
-                <ButtonDelete onClick={() => {
-                  if (window.confirm("Confirmation de suppression du compte")) {
-                    handleDeleteUser(userData.id)}
-                  }
-                }>
+                <ButtonDelete onClick={() => setShowModal(!showModal)}>
                   Supprimer le compte
                 </ButtonDelete>
               </ProfilRow>
