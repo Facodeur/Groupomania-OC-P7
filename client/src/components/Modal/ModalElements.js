@@ -7,6 +7,7 @@ export const Background = styled.div`
   background: rgba(0, 0, 0, 0.8);
   position: fixed;
   top:0;
+  right:0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,8 +44,8 @@ export const CloseModalButton = styled(MdClose)`
   position: absolute;
   top: 20px;
   right: 20px;
-  width: 32px;
-  height: 32px;
+  width: 27px;
+  height: 27px;
   padding: 0;
   z-index: 10;
 `
