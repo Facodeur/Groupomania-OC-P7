@@ -38,70 +38,71 @@ export const addPost = (data) => async (dispatch) => {
   }
 };
 
-export const updatePost = (postId, content) => {
-  return (dispatch) => {
-    return axios({
+export const updatePost = (postId, content) => async (dispatch) => {
+  try {
+    await axios({
       method: "PUT",
       url: `${process.env.REACT_APP_API_URL}/api/post/${postId}`,
       withCredentials: true,
       data: { content },
-    })
-      .then((res) => {
-        dispatch({ type: UPDATE_POST, payload: { content, postId } });
-      })
-      .catch((err) => console.log(err));
-  };
+    });
+    dispatch({ type: UPDATE_POST, payload: { content, postId } });
+  } catch (err) {
+    return console.log(err);
+  }
 };
 
-export const deletePost = (postId) => {
-  return (dispatch) => {
-    return axios({
+export const deletePost = (postId) => async (dispatch) => {
+  try {
+    await axios({
       method: "DELETE",
       url: `${process.env.REACT_APP_API_URL}/api/post/${postId}`,
       withCredentials: true,
-    })
-      .then((res) => {
-        dispatch({ type: DELETE_POST, payload: { postId } });
-      })
-      .catch((err) => console.log(err));
-  };
+    });
+    dispatch({ type: DELETE_POST, payload: { postId } });
+  } catch (err) {
+    return console.log(err);
+  }
 };
 
-export const addComment = (postId, content) => (dispatch) => {
-  return axios({
-    method: "PATCH",
-    url: `${process.env.REACT_APP_API_URL}/api/post/comment-post/${postId}`,
-    withCredentials: true,
-    data: { content },
-  })
-    .then((res) => {
-      dispatch({ type: ADD_COMMENT, payload: { postId } });
-    })
-    .catch((err) => console.log(err));
+export const addComment = (postId, content) => async (dispatch) => {
+  try {
+    await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_API_URL}/api/post/comment-post/${postId}`,
+      withCredentials: true,
+      data: { content },
+    });
+    dispatch({ type: ADD_COMMENT, payload: { postId } });
+  } catch (err) {
+    return console.log(err);
+  }
 };
 
-export const editComment = (postId, content, idComment) => (dispatch) => {
-  return axios({
-    method: "PATCH",
-    url: `${process.env.REACT_APP_API_URL}/api/post/edit-comment-post/${postId}`,
-    withCredentials: true,
-    data: { postId, content, idComment },
-  })
-    .then((res) => {
-      dispatch({ type: EDIT_COMMENT, payload: { postId, content, idComment } });
-    })
-    .catch((err) => console.log(err));
+export const editComment = (postId, content, idComment) => async (dispatch) => {
+  try {
+    await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_API_URL}/api/post/edit-comment-post/${postId}`,
+      withCredentials: true,
+      data: { postId, content, idComment },
+    });
+    dispatch({ type: EDIT_COMMENT, payload: { postId, content, idComment } });
+  } catch (err) {
+    return console.log(err);
+  }
 };
 
-export const deleteComment = (postId, idComment) => (dispatch) => {
-  return axios({
-    method: "PATCH",
-    url: `${process.env.REACT_APP_API_URL}/api/post/delete-comment-post/${postId}`,
-    withCredentials: true,
-    data: {postId, idComment },
-  })
-    .then((res) => {
-      dispatch({ type: DELETE_COMMENT, payload: { postId, idComment } });
-    })
-    .catch((err) => console.log(err));
+export const deleteComment = (postId, idComment) => async (dispatch) => {
+  try {
+    await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_API_URL}/api/post/delete-comment-post/${postId}`,
+      withCredentials: true,
+      data: { postId, idComment },
+    });
+    dispatch({ type: DELETE_COMMENT, payload: { postId, idComment } });
+  } catch (err) {
+    return console.log(err);
+  }
 };
