@@ -7,8 +7,7 @@ export const CardContenair = styled.div`
   background: #000;
   margin: 20px;
   border-radius: 5px;
-  width: 100%;
-  max-width: 768px;
+  width: 98%;
 `
 
 export const CardRow = styled.div`
