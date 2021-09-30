@@ -4,7 +4,12 @@
 /node_modules
 /.pnp
 .pnp.js
-/public/upload/posts
+
+# files
+*.jpeg
+*.jpg
+*.png
+*.gif
 
 # testing
 /coverage
