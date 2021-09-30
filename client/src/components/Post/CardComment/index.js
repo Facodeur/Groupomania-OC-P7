@@ -33,7 +33,7 @@ const CardComment = ({ post }) => {
     <ul>
       {post && post.Comments.map((comment) => {
         return (
-          <CardContainer key={comment.id}>
+          <CardContainer key={comment.id} bgAuthor={authUser.id === comment.userId ? "aliceblue" : ""} >
             <CardHeader>
               <CardUsername>
                 <Icon />

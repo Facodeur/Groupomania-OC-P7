@@ -9,7 +9,8 @@ export const CardContainer = styled.li`
   border-radius: 5px;
   padding: 15px;
   margin: 5px;
-  max-width: 768px;
+  width: 98%;
+  background: ${({ bgAuthor }) => bgAuthor };
 `
 
 export const CardHeader = styled.div`
@@ -40,9 +41,8 @@ export const CardText = styled.p`
 `
 
 export const CardPicture = styled.img`
-  margin: 2px;
   border-radius: 5px;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 `
 
