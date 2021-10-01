@@ -50,5 +50,9 @@
 - Ouvrez un autre terminal sur le dossier client et tapez la commande ```npm start```
 - Gardez le ouvert
 
-### Happy !!! Bonne utilisation :)
+### Ouvrer votre navigateur sur :
+```
+http://localhost:3000
+```
 
+### Happy !!! Bonne utilisation :)
