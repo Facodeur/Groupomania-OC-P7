@@ -37,7 +37,7 @@
 
 ## Créer et migrer la database sur mySQL
 - Ouvrez le terminal sur le dossier server
-- Tapez la commande: ```sequelize db:create``` ( le schéma se crée dans la db mySQL avec le nom que vous aviez choisit )
+- Tapez la commande: ```sequelize db:create``` ( le schéma se crée dans la db mySQL avec le nom que vous aviez choisi )
 - Tapez la commande: ```sequelize db:migrate``` ( les models migrent dans la db mySQL )
 
 ## Démarrer l'application
