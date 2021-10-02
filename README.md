@@ -1,5 +1,5 @@
 # Projet CRUD
-Cette application est un MVP sur le thème d'un réseau social, les fonctionnalitées qui ont été implémentées sont :
+Cette application est un MVP sur le thème d'un réseau social, les fonctionnalités qui ont été implémentées sont :
 - l'enregistrement d'un utilisateur
 - la connexion de l'utilisateur avec maintien de session via un token stocké dans un cookie
 - la consultation de la liste des posts et des commentaires sans authentification
