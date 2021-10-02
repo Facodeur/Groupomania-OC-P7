@@ -1,4 +1,4 @@
-# Projet CRUD réseau social
+# Projet FullStack Javascript CRUD réseau social
 ![aperçu](https://media.giphy.com/media/KQwfFO47z5iGLA3L23/giphy.gif)
 
 Cette application est un MVP sur le thème d'un réseau social, les fonctionnalités qui ont été implémentées sont :
