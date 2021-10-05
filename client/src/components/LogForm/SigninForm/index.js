@@ -1,4 +1,7 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { UserContext } from "../../../context/UserContext";
+import authService from "../../../services/auth.services";
 import {
   Container,
   FormWrap,
@@ -11,9 +14,6 @@ import {
   FormButton,
   TextError
 } from "../FormElements";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { UserContext } from "../../../context/UserContext";
 
 const SigninForm = () => {
   let history = useHistory();
@@ -26,15 +26,7 @@ const SigninForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}/api/user/login`,
-      withCredentials: true,
-      data: {
-        email,
-        password,
-      },
-    })
+    authService.signin(email, password)
       .then((res) => {
         if (res.data.emailError || res.data.passwordError) {
           setEmailError(res.data.emailError);

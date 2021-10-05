@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import axios from "axios";
 import {
   Container,
   FormWrap,
@@ -18,6 +17,7 @@ import {
   FormLink,
   AlertMessage,
 } from "../FormElements";
+import authService from "../../../services/auth.services";
 
 const SignupForm = () => {
   let history = useHistory();
@@ -49,16 +49,7 @@ const SignupForm = () => {
         setTermsError("Veuillez valider les conditions générales");
       }
     } else {
-      axios({
-        method: "post",
-        url: `${process.env.REACT_APP_API_URL}/api/user/register`,
-        withCredentials: true,
-        data: {
-          username,
-          email,
-          password,
-        },
-      })
+      authService.signup(username, email, password)
         .then((res) => {
           if (res.data.errorEmail) setEmailError(res.data.errorEmail);
 
