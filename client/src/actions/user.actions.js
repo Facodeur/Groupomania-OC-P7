@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const GET_USER = "GET_USER";
+export const LOGOUT = "LOGOUT";
 export const DELETE_USER = "DELETE_USER";
 
 export const getUser = () => async (dispatch) => {
@@ -16,6 +17,18 @@ export const getUser = () => async (dispatch) => {
   }
 };
 
+export const logout = () => async (dispatch) => {
+  try {
+    const res = await axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}/api/user/logout`,
+      withCredentials: true,
+    });
+    dispatch({ type: LOGOUT, payload: res.data });
+  } catch (err) {
+    return console.log(err);
+  }
+};
 
 export const deleteUser = (uid) => async (dispatch) => {
   try {

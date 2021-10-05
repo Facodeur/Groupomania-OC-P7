@@ -1,29 +1,22 @@
 import React, { useContext } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import { AiOutlineLogout } from "react-icons/ai";
 import { UserContext } from "../../context/UserContext";
-import { removeCookie } from "../../utils/utils";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/user.actions";
+import { AiOutlineLogout } from "react-icons/ai";
 import { ButtonLogout } from "./LogoutElements";
 
-const Logout = ({ className }) => {
+const Logout = () => {
   const { setAuthUser } = useContext(UserContext);
+  const dispatch = useDispatch();
 
-  const logout = async () => {
-    await axios({
-      method: "get",
-      url: `${process.env.REACT_APP_API_URL}/api/user/logout`,
-      withCredentials: true,
-    })
-      .then(() => removeCookie("jwt"))
-      .catch((err) => console.log(err));
-
+  const handleLogout = async () => {
+    dispatch(logout());
     setAuthUser(null);
   };
 
   return (
     <>
-      <ButtonLogout onClick={logout}>
+      <ButtonLogout onClick={handleLogout}>
         <AiOutlineLogout />
       </ButtonLogout>
     </>
