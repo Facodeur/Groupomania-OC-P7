@@ -5,7 +5,7 @@ import { getUsers } from "../../../actions/users.action";
 import Modal from "../../../components/Modal";
 import { Button } from "../../../components/Post/BtnDeletePost/BtnDeletePostElements";
 import { UserContext } from "../../../context/UserContext";
-import { dateParser } from "../../../utils/date-parser";
+import { dateParser } from "../../../utils/utils";
 import {
   AlertMessage,
   BtnDelete,

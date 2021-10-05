@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getPosts } from "../../../actions/post.action";
 import { UserContext } from "../../../context/UserContext";
-import { dateParser } from "../../../utils/date-parser";
+import { dateParser } from "../../../utils/utils";
 import {
   CardContainer,
   CardHeader,

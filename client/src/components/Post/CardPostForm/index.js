@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlinePicture } from "react-icons/ai";
-import { timestampParser } from "../../../utils/date-parser";
+import { timestampParser } from "../../../utils/utils";
 import { addPost, getPosts } from "../../../actions/post.action";
 import Modal from "../../Modal";
 import {

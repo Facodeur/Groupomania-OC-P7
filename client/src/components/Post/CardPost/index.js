@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { dateParser } from "../../../utils/date-parser";
+import { dateParser } from "../../../utils/utils";
 import { FaSpinner } from "react-icons/fa";
 import BtnDeletePost from "../BtnDeletePost";
 import BtnUpdatePost from "../BtnUpdatePost";
