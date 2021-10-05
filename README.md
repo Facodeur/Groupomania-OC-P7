@@ -34,4 +34,4 @@ L'admin a le droit de :
 
 # ***Installation de l'application***
 
-Suivre le mode d'installation sur ce lien [INSTALLATION.md](https://github.com/Facodeur/Groupomania-OC-P7/blob/main/INSTALLATION.md)
+Suivre le mode d'[INSTALLATION.md](https://github.com/Facodeur/Groupomania-OC-P7/blob/main/INSTALLATION.md)
