@@ -1,12 +1,25 @@
 # Réseau social
 ![aperçu](https://media.giphy.com/media/KQwfFO47z5iGLA3L23/giphy.gif)
 
-Cette application est un MVP sur le thème d'un réseau social, les fonctionnalités qui ont été implémentées sont :
+Cette application permet de démarrer un projet sur le thème d'un réseau social, permettant de s'enregistrer, de s'authentifié et une fois authentifié de partager des articles et/ou de commenter des articles
+
+
+
+## ***Stack technique***
+
+#### ***Frontend*** : React - Redux - styled-components
+  
+#### ***Backend*** :  Nodejs - express - sequelize
+  
+#### ***Database*** : mySQL
+
+## ***Fonctionnalités***
+
 - l'enregistrement d'un utilisateur
 - la connexion de l'utilisateur avec maintien de session via un token stocké dans un cookie
 - la consultation de la liste des posts et des commentaires sans authentification
 
-##### ***Avec authentification :***
+#### ***Avec authentification :***
 
 - la consultation de son profil utilisateur
 - la possibilité de supprimer son compte utilisateur ( lors de la suppression tout les posts et commentaires relier à ce compte seront supprimé en cascade )
@@ -17,20 +30,12 @@ Cette application est un MVP sur le thème d'un réseau social, les fonctionnali
 - la modification de son commentaire
 - la suppression de son commentaire
 
-##### ***Un mode admin*** ( A attribuer manuellement dans la database mySQL en mettant le isAdmin a 1 )
+#### ***Un mode admin*** ( A attribuer manuellement dans la database mySQL en mettant le isAdmin a 1 )
+
 L'admin a le droit de :
 - supprimer ou modifier un post
 - supprimer ou modifier un commentaire
 - a accés à un lien privé pour gérer les utilisateurs
-
-
-## ***Stack technique***
-
-#### ***Frontend*** : React - Redux - styled-components
-  
-#### ***Backend*** :  Nodejs - express - sequelize
-  
-#### ***Database*** : mySQL
 
 # ***Installation de l'application***
 
