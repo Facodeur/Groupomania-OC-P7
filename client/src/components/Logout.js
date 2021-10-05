@@ -1,18 +1,12 @@
 import React, { useContext } from 'react'
 import axios from "axios"
-import cookie from "js-cookie";
 import styled from "styled-components";
 import { AiOutlineLogout } from "react-icons/ai"
 import { UserContext } from '../context/UserContext';
+import { removeCookie } from '../utils/utils';
 
 const Logout = ({ className }) => {
   const { setAuthUser } = useContext(UserContext);
-
-  const removeCookie = (key) => {
-    if(window !== undefined) {
-      cookie.remove(key, { expires: 1 });
-    }
-  }
 
   const logout = async () => {
     await axios({

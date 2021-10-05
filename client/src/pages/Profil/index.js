@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "../../actions/user.actions";
-import { dateParser } from "../../utils/utils";
-import cookie from "js-cookie";
+import { dateParser, removeCookie } from "../../utils/utils";
 import {
   Container,
   ProfilWrap,
@@ -22,12 +21,6 @@ const Profil = () => {
 
   const [alertMessage, setAlertMessage] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const removeCookie = (key) => {
-    if (window !== undefined) {
-      cookie.remove(key, { expires: 1 });
-    }
-  };
 
   const handleDeleteUser = (id) => {
     dispatch(deleteUser(id));
