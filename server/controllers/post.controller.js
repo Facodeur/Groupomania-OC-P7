@@ -1,5 +1,6 @@
 const postModel = require("../models").Post;
 const userModel = require("../models").User;
+const likesModel = require("../models").Likes;
 const commentModel = require("../models").Comment;
 const fs = require("fs");
 
@@ -111,6 +112,26 @@ exports.deletePost = (req, res) => {
     })
     .catch(() => {
       res.status(404).json({ message: "Ce post n'existe pas" });
+    });
+};
+
+exports.likePost = (req, res) => {
+  const user_id = res.locals.user.id;
+
+  postModel
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      likesModel
+        .create({
+          userId: user_id,
+          postId: post.id,
+        })
+        .then((like) => {
+          res.status(201).json(like);
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
     });
 };
 
