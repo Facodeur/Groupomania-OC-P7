@@ -147,13 +147,13 @@ exports.unlikePost = (req, res) => {
       where: { userId: user_id, postId: req.params.id },
     })
     .then((like) => {
-      if (like.userId === user_id) {
+      if (like.userId === +req.body.userId) {
         likesModel
           .destroy({
             where: { userId: req.body.userId, postId: req.params.id },
           })
           .then(() => {
-            res.status(200).json({ message: "neutre"});
+            res.status(200).json({ message: "Vous êtes neutre"});
           })
           .catch(err => {
             res.status(400).json(err.message)
