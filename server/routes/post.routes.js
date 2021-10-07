@@ -12,6 +12,7 @@ router.delete("/:id", authJwt, postController.deletePost);
 
 // likes
 router.patch('/like-post/:id', authJwt, postController.likePost);
+router.patch('/unlike-post/:id', authJwt, postController.unlikePost);
 
 // comments
 router.patch('/comment-post/:id', authJwt, postController.commentPost);
