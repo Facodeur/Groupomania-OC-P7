@@ -17,6 +17,10 @@ exports.getAllPosts = (req, res) => {
           model: commentModel,
           require: true,
         },
+        {
+          model: likesModel,
+          require: true,
+        },
       ],
     })
     .then((posts) => {
