@@ -23,16 +23,18 @@ const BoardAdmin = () => {
 
   const [alertMessage, setAlertMessage] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [userIdCopy, setUserIdCopy] = useState("");
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch])
+  }, [dispatch]);
 
   const handleDeleteUser = (id) => {
     dispatch(deleteUser(id));
     setAlertMessage(true);
     setLoadingUser(true);
     setShowModal(false);
+    setUserIdCopy("");
   };
 
   if (alertMessage) {
@@ -67,12 +69,17 @@ const BoardAdmin = () => {
               <Td>
                 {user.isAdmin === 0 && (
                   <>
-                    <BtnDelete onClick={() => setShowModal(!showModal)}>
+                    <BtnDelete
+                      onClick={() => {
+                        setShowModal(!showModal);
+                        setUserIdCopy(user.id);
+                      }}
+                    >
                       Supprimer
                     </BtnDelete>
                     <Modal showModal={showModal} setShowModal={setShowModal}>
                       <p>Confirmez-vous la suppression ?</p>
-                      <Button onClick={() => handleDeleteUser(user.id)}>
+                      <Button onClick={() => handleDeleteUser(userIdCopy)}>
                         Confirmer
                       </Button>
                     </Modal>
