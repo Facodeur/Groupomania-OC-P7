@@ -10,6 +10,9 @@ router.post("/", authJwt, multer, postController.createPost);
 router.put("/:id", authJwt, postController.updatePost);
 router.delete("/:id", authJwt, postController.deletePost);
 
+// likes
+router.patch('/like-post/:id', authJwt, postController.likePost);
+
 // comments
 router.patch('/comment-post/:id', authJwt, postController.commentPost);
 router.patch('/edit-comment-post/:id', authJwt, postController.editCommentPost);
