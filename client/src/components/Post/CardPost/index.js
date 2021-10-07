@@ -19,6 +19,7 @@ import {
   UpdateIcon,
 } from "./CardPostElements";
 import CardComment from "../CardComment";
+import BtnLikePost from "../BtnLikePost";
 
 const CardPost = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +63,10 @@ const CardPost = ({ post }) => {
                 <BtnDeletePost idPost={post.id} />
               </IconWrap>
             )}
+            <IconWrap>
+              <BtnLikePost post={post} />
+              <p>{post.Likes.length}</p>
+            </IconWrap>
           </CardFooter>
           {showComments && <CardComment post={post} />}
         </>
