@@ -135,6 +135,34 @@ exports.likePost = (req, res) => {
     });
 };
 
+exports.unlikePost = (req, res) => {
+  const user_id = res.locals.user.id;
+
+  likesModel
+    .findOne({
+      where: { userId: user_id, postId: req.params.id },
+    })
+    .then((like) => {
+      if (like.userId === user_id) {
+        likesModel
+          .destroy({
+            where: { userId: req.body.userId, postId: req.params.id },
+          })
+          .then(() => {
+            res.status(200).json({ message: "neutre"});
+          })
+          .catch(err => {
+            res.status(400).json(err.message)
+          })
+      } else {
+        res.status(401).json({ message: "Vous n'êtes pas autorisé" });
+      }
+    })
+    .catch(() => {
+      res.status(500).json({ message: "Id post ou id user incorrect" });
+    });
+};
+
 exports.commentPost = (req, res) => {
   const user_id = res.locals.user.id;
 
