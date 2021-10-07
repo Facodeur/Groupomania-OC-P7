@@ -3,6 +3,8 @@ import axios from "axios";
 // posts
 export const GET_POSTS = "GET_POSTS";
 export const ADD_POSTS = "ADD_POSTS";
+export const LIKE_POST = "LIKE_POST";
+export const UNLIKE_POST = "UNLIKE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
@@ -33,6 +35,33 @@ export const addPost = (data) => async (dispatch) => {
       withCredentials: true,
       data: data,
     });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const likePost = ( postId ) => async (dispatch) => {
+  try {
+    const res = await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_API_URL}/api/post/like-post/${postId}`,
+      withCredentials: true,
+    });
+    dispatch({ type: LIKE_POST, payload: res.data });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const unlikePost = ( userId, postId ) => async (dispatch) => {
+  try {
+    await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_API_URL}/api/post/unlike-post/${postId}`,
+      withCredentials: true,
+      data: { userId: userId }
+    });
+    dispatch({ type: UNLIKE_POST,  payload: { userId, postId } });
   } catch (err) {
     return console.log(err);
   }
