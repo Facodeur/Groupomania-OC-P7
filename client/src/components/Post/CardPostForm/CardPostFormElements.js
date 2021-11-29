@@ -25,7 +25,7 @@ export const CardTextarea = styled.textarea`
   resize: none;
   width: 100%;
   height: 40px;
-  padding: 7px;
+  padding: 10px;
   font-size: 1rem;
 `
 
