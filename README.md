@@ -1,5 +1,8 @@
-# Projet réseau social
-![aperçu](https://media2.giphy.com/media/hWWWIcF7W63kO44Ynn/giphy.gif)
+
+<h1 align="center">Réseau social React.js</h1>
+<p align="center">
+  <img src="https://media2.giphy.com/media/hWWWIcF7W63kO44Ynn/giphy.gif"/>
+</p>
 
 Cette application permet de démarrer un projet sur le thème d'un réseau social, elle permet de consulter des articles existant sans authentification, pour participer au échange il faudra au préalable s'inscrire, l'inscription est rapide et sécurisé, par la suite vous authentifiez et vous pourrez poster des articles avec du texte et/ou une image, intéragir avec les autres en commentant les articles et aussi cliquer sur le petit ♥️ pour aimer un article, vous pourrez supprimer votre compte, cela entraînera la suppression de vos post, de vos commentaires ainsi que vos like et il ne restera aucune trace de vos informations dans la base de donnée, un rôle admin peut être attribué pour gérer les échanges utilisateurs et aussi gérer les comptes utilisateurs si il ne respecte pas la charte de conduite du site
 
